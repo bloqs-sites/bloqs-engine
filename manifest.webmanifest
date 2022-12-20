@@ -1,0 +1,47 @@
+{
+    "lang": "en",
+    "dir": "ltr",
+    "name": "Super Racer 3000",
+    "short_name": "Racer3K",
+    "icons": [
+      {
+        "src": "icon/lowres.webp",
+        "sizes": "48x48",
+        "type": "image/webp"
+      },{
+        "src": "icon/lowres",
+        "sizes": "48x48"
+      },{
+        "src": "icon/hd_hi.ico",
+        "sizes": "72x72 96x96 128x128 256x256"
+      },{
+        "src": "icon/hd_hi.svg",
+        "sizes": "257x257"
+      }
+    ],
+    "scope": "/",
+    "id": "superracer",
+    "start_url": "/start.html",
+    "display": "fullscreen",
+    "orientation": "landscape",
+    "theme_color": "aliceblue",
+    "background_color": "red", 
+    "shortcuts": [
+      {
+        "name": "Play Later",
+        "description": "View the list of podcasts you saved for later",
+        "url": "/play-later",
+        "icons": [
+          {
+            "src": "/icons/play-later.svg",
+            "type": "image/svg+xml"
+          }
+        ]
+      },
+      {
+        "name": "Subscriptions",
+        "description": "View the list of podcasts you listen to",
+        "url": "/subscriptions?sort=desc"
+      }
+    ]
+  }

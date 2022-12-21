@@ -123,10 +123,18 @@ Content security policy	content-security-policy
 <body>
 
 <header>
-<h1>PAP Title</h1>
+<h1>Bloqs</h1>
 
-<form>
-    <p><label><span class="visually-hidden">Search: </span><input type="search" name="s" id="search" placeholder="Search..."/></label></p>
+<form action="#items">
+<p id="search-bar">
+<label><span class="visually-hidden">Search: </span><input type="search" name="s" id="search" placeholder="Search..."/></label>
+<button type="submit" title="submit search" id="search-btn">&#x1F50D;</button>
+</p>
+</form>
+
+<form action="#items">
+<p id="trends-text">I want to see the items</p>
+<p id="trends-goto"><button type="submit" name="trends" title="submit trends search" id="trends-btn">&#x1F447;</button></p>
 </form>
 </header>
 

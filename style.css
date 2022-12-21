@@ -42,7 +42,7 @@
     --ff-ss-franklin-gothic-medium: "Franklin Gothic Medium", Arial;
     --ff-ss-tamoha: Tahoma, Geneva, Verdana;
 
-    --ff-ss-primary: $ff-ss-optima, ui-sans-serif, sans-serif;
+    --ff-ss-primary: var(--ff-ss-optima), ui-sans-serif, sans-serif;
     --ff-monospace: ui-monospace, monospace, monospace;
     --ff-icons: "glyphicons", emoji;
 
@@ -64,7 +64,7 @@
     --fs-0: .3125rem;
 
 	--gap: .75em;
-	--width: calc(100vw - 40ch);
+	--width: (100vw - 40ch);
 	--columns: 5;
 	--shadow: .5em;
 }
@@ -368,22 +368,68 @@ body {
   font-family: var(--ff-ss-primary);
 }
 
+@media (min-width: 96em) {
+	body {
+		max-width: 120ch;
+	}
+}
+
 header {
+	height: calc(100vh - 4em);
     margin: 1em;
+    display: flex;
+    flex-direction: column;
 }
 
 header h1 {
     color: var(--clr-light-10);
+    font-size: var(--fs-display-1);
     font-weight: 700;
     text-align: center;
 }
 
-header #search {
+header form {
+    margin: auto 0;
+}
+
+#search-bar {
     width: 100%;
     border: 0;
     border-radius: 50vmax;
     box-shadow: 0 0 .5em -.333em;
     padding: 1em;
+    background-color: white;
+    display: flex;
+}
+
+#search-bar label {
+    width: 100%;
+}
+
+#search {
+    width: 100%;
+    background-color: transparent;
+    border: 0px solid transparent;
+}
+
+#search-btn {
+    margin-left: auto;
+    background-color: transparent;
+    border: 0px solid transparent;
+}
+
+#trends-text {
+    text-align: center;
+}
+
+#trends-goto {
+    display: flex;
+}
+
+#trends-btn {
+    margin: auto;
+    background-color: transparent;
+    border: 0px solid transparent;
 }
 
 #items {

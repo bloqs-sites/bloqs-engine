@@ -24,7 +24,8 @@
     },
     "autoload": {
         "psr-4": {
-            "TorresDeveloper\\BlocksEngine\\": "src/php/"
+            "TorresDeveloper\\BlocksEngine\\": "src/php/",
+            "TorresDeveloper\\BlocksEngine\\Controllers\\": "src/php/controllers"
         }
     },
     "minimum-stability": "dev",

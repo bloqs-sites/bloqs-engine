@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6404aa6fd87522571be9cd079360cfd9",
+    "content-hash": "e5c2026350a704e4001a6aad0a53fa31",
     "packages": [
         {
             "name": "pds/skeleton",
@@ -102,12 +102,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/MVCBase.git",
-                "reference": "83d73e27840f9bef0aabbeff40b979fa012445af"
+                "reference": "aa5fe09a7f8bec854d706ab3583e200b302d12be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/83d73e27840f9bef0aabbeff40b979fa012445af",
-                "reference": "83d73e27840f9bef0aabbeff40b979fa012445af",
+                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/aa5fe09a7f8bec854d706ab3583e200b302d12be",
+                "reference": "aa5fe09a7f8bec854d706ab3583e200b302d12be",
                 "shasum": ""
             },
             "require": {

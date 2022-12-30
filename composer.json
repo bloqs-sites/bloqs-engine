@@ -1,0 +1,37 @@
+{
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "torres-developer/blocks-engine",
+    "description": "The engine for a blocks site",
+    "type": "project",
+    "homepage": "https://github.com/torres-developer/blocks-engine",
+    "readme": "./README.md",
+    "time": "2022-10-29",
+    "license": "AGPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "torres-developer",
+            "email": "torres.dev@disroot.org",
+            "homepage": "https://github.com/torres-developer",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/torres-developer/blocks-engine/issues",
+        "source": "https://github.com/torres-developer/blocks-engine/"
+    },
+    "require": {
+        "torres-developer/mvc": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "TorresDeveloper\\BlocksEngine\\": "src/php/"
+        }
+    },
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/torres-developer/blocks-engine"
+        }
+    ]
+}

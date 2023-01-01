@@ -32,7 +32,9 @@ declare(strict_types=1);
 namespace TorresDeveloper\BlocksEngine\Controllers;
 
 use TorresDeveloper\MVC\Controller;
+use TorresDeveloper\MVC\NativeViewLoader;
 use TorresDeveloper\MVC\Route;
+use TorresDeveloper\MVC\View;
 
 /**
  * The default Controller.
@@ -45,12 +47,9 @@ use TorresDeveloper\MVC\Route;
 class MarketController extends Controller
 {
     #[Route]
+    #[View(NativeViewLoader::class, TEMPLATES . "/php")]
     public function index(): void
     {
-        include "index.html";
-
-        //echo "<pre>". (string) $this->req->getUri() . PHP_EOL;
-        //var_dump($this->req->getUri());
-        //echo PHP_EOL . "</pre>";
+        $this->load("market");
     }
 }

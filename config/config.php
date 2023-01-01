@@ -60,6 +60,11 @@ define("CHARSET", "UTF-8");
 define("HOMEPAGE", "Market");
 
 /**
+ * @var string Default templates directory.
+ */
+define("TEMPLATES", __DIR__ . "/../public/templates/");
+
+/**
  * @var string PATH_SEARCH_PARAMETER Used for routing.
  */
 define("PATH_SEARCH_PARAMETER", "path");

@@ -42,7 +42,7 @@ use TorresDeveloper\MVC\View;
  * @author João Torres <torres.dev@disroot.org>
  *
  * @since 0.0.3
- * @version 0.0.1
+ * @version 0.0.2
  */
 class MarketController extends Controller
 {

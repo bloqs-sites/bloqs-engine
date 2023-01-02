@@ -1,0 +1,29 @@
+@startuml
+
+entity Client {
+    *id
+    homepage
+    clientRate
+    sellerRate
+}
+
+entity Preference {
+    *name
+}
+
+entity Bloq {
+    *id
+    name
+    description
+    preference
+    seller
+    price
+    discount
+    rate
+}
+
+Client }o-- Preference
+Bloq ||-- Preference
+Client }o--|| Bloq
+
+@enduml

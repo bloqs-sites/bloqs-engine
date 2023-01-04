@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-
-<html lang="en"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xml:lang="en">
-
-<head>
+<?php
+//defined(HOMEPAGE) OR exit(0)
+use function TorresDeveloper\MVC\baseurl;
+?>
 
 <meta charset="utf-8" />
 <title>PAP</title>
@@ -60,10 +57,10 @@ the same ones but without -precomposed
 <link rel="license" href="/about">
 -->
 
-<!--[if gt IE 8]><!--><link href="style.css?v=13aug2022" rel="stylesheet" title="Default Style" /><!--<![endif]-->
-<!--[if lte IE 8]><link href="legacy.css?v=13aug2022" rel="stylesheet" title="Default Style Legacy" /><![endif]-->
+<!--[if gt IE 8]><!--><link href="<?=baseurl("style.css?v=13aug2022")?>" rel="stylesheet" title="Default Style" /><!--<![endif]-->
+<!--[if lte IE 8]><link href="<?=baseurl("legacy.css?v=13aug2022")?>" rel="stylesheet" title="Default Style Legacy" /><![endif]-->
 
-<link href="legacy.css?v=13aug2022" rel="alternate stylesheet" title="Default Style Legacy" />
+<link href="<?=baseurl("legacy.css?v=13aug2022")?>" rel="alternate stylesheet" title="Default Style Legacy" />
 <!-- <link href="fancy.css" rel="stylesheet" title="Fancy" /> -->
 <!-- <link href="basic.css" rel="alternate stylesheet" title="Basic" /> -->
 
@@ -115,7 +112,5 @@ Content security policy	content-security-policy
 <![endif]-->
 
 <!--<link rel="preload" as="image" type="image/webp" href="/logo.webp">-->
-<script defer src="./webp-in-css/polyfill.js"></script>
+<script defer src="<?=baseurl("webp-in-css/polyfill.js")?>"></script>
 <script defer src="https://unpkg.com/avif-in-css/polyfill.js"></script>
-
-</head>

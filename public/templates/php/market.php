@@ -1,6 +1,14 @@
 <?php //defined(HOMEPAGE) OR exit(0) ?>
 
+<!DOCTYPE html>
+
+<html lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xml:lang="en">
+
+<head>
 <?php $this->render("head") ?>
+</head>
 
 <body>
 

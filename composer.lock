@@ -102,12 +102,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/MVCBase.git",
-                "reference": "191d3800d1f1c8dfaf0300c9ee0733884da6c55d"
+                "reference": "0dc33fc0ffd7ef1311e8c6bab47cd72867e1fcc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/191d3800d1f1c8dfaf0300c9ee0733884da6c55d",
-                "reference": "191d3800d1f1c8dfaf0300c9ee0733884da6c55d",
+                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/0dc33fc0ffd7ef1311e8c6bab47cd72867e1fcc2",
+                "reference": "0dc33fc0ffd7ef1311e8c6bab47cd72867e1fcc2",
                 "shasum": ""
             },
             "require": {
@@ -122,6 +122,10 @@
             ],
             "type": "library",
             "autoload": {
+                "files": [
+                    "src/consts.php",
+                    "src/globalFunctions.php"
+                ],
                 "psr-4": {
                     "TorresDeveloper\\MVC\\": "src/"
                 }

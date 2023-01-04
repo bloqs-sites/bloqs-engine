@@ -1,0 +1,8 @@
+github.com/neo4j/neo4j-go-driver/v5 v5.3.0 h1:lHar0TrufgbFWo8uYoVVBDemYlPVxw3+sRJOxPmf1uE=
+github.com/neo4j/neo4j-go-driver/v5 v5.3.0/go.mod h1:Vff8OwT7QpLm7L2yYr85XNWe9Rbqlbeb9asNXJTHO4k=
+github.com/torres-developer/bloqsenjin v0.0.0-20230103213714-9a6f6f8a322f h1:YnoPzElMx+AcOuyZoh/dyWetLLwp1eWLOMDXgulaOCE=
+github.com/torres-developer/bloqsenjin v0.0.0-20230103213714-9a6f6f8a322f/go.mod h1:Ot0soOjsuNRqVYLvJ3iL/Q2DyrFWOI3QTTpY8T1r0Fw=
+github.com/torres-developer/bloqsenjin v0.0.0-20230104004932-78dd281511e6 h1:NlF+utXnZjFCGYRxV4w+CG1hKrFRq0GY+Or5S5TO4p4=
+github.com/torres-developer/bloqsenjin v0.0.0-20230104004932-78dd281511e6/go.mod h1:8b0nrjJIhbjSWk8bbZJe68GJG0vOsvuEk9kns2F0PC4=
+github.com/torres-developer/bloqsenjin v0.0.0-20230104012403-317335d412bc h1:Y/Q/NBewauRn8O85erqtkJ4vlRI/ipGC+R4Pv5Iynq8=
+github.com/torres-developer/bloqsenjin v0.0.0-20230104012403-317335d412bc/go.mod h1:8b0nrjJIhbjSWk8bbZJe68GJG0vOsvuEk9kns2F0PC4=

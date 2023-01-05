@@ -18,7 +18,7 @@ var (
 )
 
 func init() {
-	config, err := enjin.CreateConfig("../../config/hidden/credentials.json")
+	config, err := enjin.CreateConfig("../../config/credentials.json")
 
 	if err != nil {
 		panic(err)

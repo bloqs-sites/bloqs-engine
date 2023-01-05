@@ -1,6 +1,8 @@
 <?php
+
 //defined(HOMEPAGE) OR exit(0)
 use function TorresDeveloper\MVC\baseurl;
+
 ?>
 
 <meta charset="utf-8" />
@@ -93,14 +95,14 @@ the same ones but without -precomposed
 <!--
 VIA SERVER Pragma directives - http-equiv
 
-State	Keyword	Notes
-Content Language	content-language	Non-conforming
-Encoding declaration	content-type
-Default style	default-style
-Refresh	refresh
-Set-Cookie	set-cookie	Non-conforming
-X-UA-Compatible	x-ua-compatible
-Content security policy	content-security-policy
+State   Keyword Notes
+Content Language    content-language    Non-conforming
+Encoding declaration    content-type
+Default style   default-style
+Refresh refresh
+Set-Cookie  set-cookie  Non-conforming
+X-UA-Compatible x-ua-compatible
+Content security policy content-security-policy
 -->
 
 <meta name="date" content="2022-12-20" />

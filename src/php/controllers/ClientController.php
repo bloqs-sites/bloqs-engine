@@ -54,7 +54,6 @@ class ClientController extends Controller
     public function make(): void
     {
         if ($this->getVerb() === HTTPVerb::POST) {
-            var_dump($this->req->getParsedBody());
             $this->res->withHeader("Location", baseurl());
             return;
         }

@@ -57,7 +57,7 @@ func preferencesHandler(w http.ResponseWriter, r *http.Request) {
     refs, err := proxy.GetPreferences(false)
     preferences := make([]enjin.Preference, len(refs))
     for i, v := range refs {
-        preferences[i] = *v
+        preferences[i] = v
     }
 
     if err != nil {

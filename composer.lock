@@ -102,12 +102,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/MVCBase.git",
-                "reference": "903bcdc29d6ce108ed1e2076777431d6097f30f9"
+                "reference": "1177f593587b8c96d3c30e6e4191a0f803a0f861"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/903bcdc29d6ce108ed1e2076777431d6097f30f9",
-                "reference": "903bcdc29d6ce108ed1e2076777431d6097f30f9",
+                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/1177f593587b8c96d3c30e6e4191a0f803a0f861",
+                "reference": "1177f593587b8c96d3c30e6e4191a0f803a0f861",
                 "shasum": ""
             },
             "require": {

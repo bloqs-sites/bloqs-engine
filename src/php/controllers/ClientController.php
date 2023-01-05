@@ -32,6 +32,7 @@ declare(strict_types=1);
 namespace TorresDeveloper\BlocksEngine\Controllers;
 
 use TorresDeveloper\MVC\Controller;
+use TorresDeveloper\MVC\DB;
 use TorresDeveloper\MVC\HTTPVerb;
 use TorresDeveloper\MVC\NativeViewLoader;
 use TorresDeveloper\MVC\Route;
@@ -51,9 +52,22 @@ class ClientController extends Controller
 {
     #[Route]
     #[View(NativeViewLoader::class, TEMPLATES . "/php")]
+    #[DB(DEFAULT_DB)]
     public function make(): void
     {
         if ($this->getVerb() === HTTPVerb::POST) {
+            $body = $this->req->getParsedBody();
+
+            try {
+                $this->db->insert("client", [
+                    "id" => $body["name"],
+                ]);
+            } catch (\PDOException $e) {
+                if ($e->getCode() == 23000) {
+                    return;
+                }
+            }
+
             $this->res->withHeader("Location", baseurl());
             return;
         }

@@ -1,5 +1,7 @@
 /public/assets/fonts
 
-/config/hidden
+/config/credentials.json
+/config/databaseConfig.php
+/resources/schema.sql
 
 /vendor/

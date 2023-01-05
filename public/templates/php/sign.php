@@ -4,13 +4,17 @@
 
 <body>
 
-<form action="POST">
-<label for="preferences">Select what are you interested in:</label>
-<select id="preferences" multiple name="preferences" required>
+<form method="POST">
+<p><label>Username: <input name="name" /></label></p>
+<p>Select what are you interested in:</p>
+<div id="preferences-list">
 <?php foreach ($preferences as $p): ?>
-<option value="<?=$p?>" label="<?=$p?>">
+<input class="visually-hidden" type="checkbox" id="<?=$p?>-preference" name="preferences[<?=$p?>]" />
+<label for="<?=$p?>-preference"><?=$p?></label>
 <?php endforeach; ?>
-</select>
+</div>
+
+<p><button type="submit">Create acc</button></p>
 </form>
 
 </body>

@@ -12,6 +12,10 @@
 
 <body>
 
+<nav id="nav">
+<a href="/client/make">Sign up</a>
+</nav>
+
 <header>
 <h1>Bloqs</h1>
 
@@ -29,7 +33,6 @@
 </header>
 
 <div id="items">
-<!--
 <div class="bottom right"></div>
 <div class="left right"></div>
 <div class="left"></div>
@@ -55,7 +58,6 @@
 <div class=""></div>
 <div class=""></div>
 <div class=""></div>
--->
 </div>
 
 </body>

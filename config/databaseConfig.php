@@ -14,16 +14,16 @@ use TorresDeveloper\PdoWrapperAPI\Core\DataSourceName;
 use TorresDeveloper\PdoWrapperAPI\Core\Credentials;
 use TorresDeveloper\PdoWrapperAPI\MysqlConnection;
 
-$user = "";
-$password = "";
+$user = "bloqsrdbmsuser";
+$password = "RDB1&RDBS2eBico!";
 $credentials = Credentials::getCredentials($user, $password);
 
 return [
     DEFAULT_DB => [
         "class" => MysqlConnection::class,
         "dsn" => new DataSourceName([
-            "host" => "",
-            "database" => "",
+            "host" => "localhost",
+            "database" => "bloqsrdb",
             "charset" => "utf8mb4"
         ], $credentials)
     ],

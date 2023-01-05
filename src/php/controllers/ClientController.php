@@ -32,9 +32,12 @@ declare(strict_types=1);
 namespace TorresDeveloper\BlocksEngine\Controllers;
 
 use TorresDeveloper\MVC\Controller;
+use TorresDeveloper\MVC\HTTPVerb;
 use TorresDeveloper\MVC\NativeViewLoader;
 use TorresDeveloper\MVC\Route;
 use TorresDeveloper\MVC\View;
+
+use function TorresDeveloper\MVC\baseurl;
 
 /**
  * The Controller to manage the client session
@@ -50,8 +53,27 @@ class ClientController extends Controller
     #[View(NativeViewLoader::class, TEMPLATES . "/php")]
     public function make(): void
     {
+        if ($this->getVerb() === HTTPVerb::POST) {
+            var_dump($this->req->getParsedBody());
+            $this->res->withHeader("Location", baseurl());
+            return;
+        }
+
         $this->load("sign", [
-            "preferences" => ["Maca", "Pera"]
+            "preferences" => [
+                "free",
+                "software",
+                "redistribute",
+                "GNU",
+                "Affero",
+                "General",
+                "Public",
+                "License",
+                "Free",
+                "Software",
+                "Foundation",
+                "License",
+            ]
         ]);
     }
 }

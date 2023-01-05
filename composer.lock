@@ -102,17 +102,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/MVCBase.git",
-                "reference": "0dc33fc0ffd7ef1311e8c6bab47cd72867e1fcc2"
+                "reference": "29094d451b37ca169ad44378f14057849b536a36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/0dc33fc0ffd7ef1311e8c6bab47cd72867e1fcc2",
-                "reference": "0dc33fc0ffd7ef1311e8c6bab47cd72867e1fcc2",
+                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/29094d451b37ca169ad44378f14057849b536a36",
+                "reference": "29094d451b37ca169ad44378f14057849b536a36",
                 "shasum": ""
             },
             "require": {
                 "pds/skeleton": "^1.0",
-                "php": ">=8.1.11",
+                "php": ">=8.1.13",
                 "psr/http-message": "1.0.x-dev",
                 "torres-developer/pdo": "dev-master"
             },
@@ -160,17 +160,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/PDOWrapperAPI.git",
-                "reference": "47ba4bbc7689cbe9493d5283c46ce6c6619ab377"
+                "reference": "1d1048ef34acb20b991b23a46949e2acd373c05a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/PDOWrapperAPI/zipball/47ba4bbc7689cbe9493d5283c46ce6c6619ab377",
-                "reference": "47ba4bbc7689cbe9493d5283c46ce6c6619ab377",
+                "url": "https://api.github.com/repos/torres-developer/PDOWrapperAPI/zipball/1d1048ef34acb20b991b23a46949e2acd373c05a",
+                "reference": "1d1048ef34acb20b991b23a46949e2acd373c05a",
                 "shasum": ""
             },
             "require": {
                 "ext-pdo": "*",
-                "php": ">=8.1.11"
+                "php": ">=8.1.13"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "dev-master",

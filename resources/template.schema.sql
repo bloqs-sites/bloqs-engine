@@ -12,10 +12,10 @@ USE `bloqs`;
 
 -- CREATE USER IF NOT EXISTS @user@@host IDENTIFIED BY @passwd;
 -- GRANT SELECT, DELETE, INSERT, UPDATE ON @db.* TO @user@@host;
-CREATE USER IF NOT EXISTS `bloquser`@`localhost` IDENTIFIED BY `passwd`;
+CREATE USER IF NOT EXISTS `bloquser`@`localhost` IDENTIFIED BY "passwd";
 GRANT SELECT, DELETE, INSERT, UPDATE ON `bloqs`.* TO `bloquser`@`localhost`;
 
 CREATE TABLE `client`(
 	`id` VARCHAR(95),
-	PRIMARY KEY(`name`)
+	PRIMARY KEY(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

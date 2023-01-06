@@ -62,6 +62,19 @@ class ClientController extends Controller
                 $this->db->insert("client", [
                     "id" => $body["name"],
                 ]);
+
+                $handler = curl_init("http://localhost:8080/clients");
+
+                curl_setopt($handler, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($handler, CURLOPT_POST, true);
+                curl_setopt($handler, CURLOPT_POSTFIELDS, json_encode([
+                    "client" => $body["name"],
+                    "likes" => array_keys($body["preferences"])
+                ]));
+
+                curl_exec($handler);
+
+                curl_close($handler);
             } catch (\PDOException $e) {
                 if ($e->getCode() == 23000) {
                     return;
@@ -72,21 +85,13 @@ class ClientController extends Controller
             return;
         }
 
+        json_decode(file_get_contents("http://localhost:8080/preferences"), true);
+
         $this->load("sign", [
-            "preferences" => [
-                "free",
-                "software",
-                "redistribute",
-                "GNU",
-                "Affero",
-                "General",
-                "Public",
-                "License",
-                "Free",
-                "Software",
-                "Foundation",
-                "License",
-            ]
+            "preferences" => json_decode(
+                file_get_contents("http://localhost:8080/preferences"),
+                true
+            )
         ]);
     }
 }

@@ -1,4 +1,4 @@
 github.com/neo4j/neo4j-go-driver/v5 v5.3.0 h1:lHar0TrufgbFWo8uYoVVBDemYlPVxw3+sRJOxPmf1uE=
 github.com/neo4j/neo4j-go-driver/v5 v5.3.0/go.mod h1:Vff8OwT7QpLm7L2yYr85XNWe9Rbqlbeb9asNXJTHO4k=
-github.com/torres-developer/bloqsenjin v0.0.0-20230105205353-a8d20fcecd6e h1:gZYC3TwXtCzlcueKsvtawNSZ1IPg3mU58FMG1amT9hY=
-github.com/torres-developer/bloqsenjin v0.0.0-20230105205353-a8d20fcecd6e/go.mod h1:8b0nrjJIhbjSWk8bbZJe68GJG0vOsvuEk9kns2F0PC4=
+github.com/torres-developer/bloqsenjin v0.0.0-20230106011626-8f039a7a1936 h1:LGEuiuXqaE686PkOr5F1zCmOlW9sFrAuq+8YDDduI9s=
+github.com/torres-developer/bloqsenjin v0.0.0-20230106011626-8f039a7a1936/go.mod h1:8b0nrjJIhbjSWk8bbZJe68GJG0vOsvuEk9kns2F0PC4=

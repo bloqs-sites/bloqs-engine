@@ -31,7 +31,6 @@ declare(strict_types=1);
 
 namespace TorresDeveloper\BlocksEngine\Controllers;
 
-use TorresDeveloper\HTTPMessage\Headers;
 use TorresDeveloper\HTTPMessage\HTTPVerb;
 use TorresDeveloper\HTTPMessage\Request;
 use TorresDeveloper\MVC\Controller;
@@ -71,21 +70,25 @@ class ClientController extends Controller
                     HTTPVerb::POST,
                     json_encode([
                         "client" => $body["name"],
-                        "likes" => array_keys($body["preferences"])
+                        "likes" => array_keys($body["preferences"] ?? [])
                     ]),
                 );
 
-                Pull::fetch()->start($req->withHeader(
+                $req = $req->withHeader(
                     "Content-Type",
                     "application/javascript"
-                ));
+                );
+
+                var_dump($req->getBody()->getContents());
+                Pull::fetch()->start($req);
             } catch (\PDOException $e) {
                 if ($e->getCode() == 23000) {
                     return;
                 }
             }
 
-            $this->res->withHeader("Location", baseurl());
+            echo PHP_EOL . "LOCATION";
+            //$this->res->withHeader("Location", baseurl());
             return;
         }
 

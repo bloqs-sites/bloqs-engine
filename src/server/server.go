@@ -83,34 +83,34 @@ func clientsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	body := r.Body
-
-	var reqBody *struct {
-		Client string             `json:"client"`
-		Likes  []enjin.Preference `json:"likes"`
+	var reqBody struct {
+		Client *string   `json:"client"`
+		Likes  *[]string `json:"likes"`
 	}
 
-	raw := make([]byte, 0)
-
-	body.Read(raw)
-
-	if err := json.Unmarshal(raw, reqBody); err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
+		panic(err)
 	}
 
-    fmt.Println(reqBody)
+	preferences := make([]enjin.Preference, len(*reqBody.Likes))
 
-	err := proxy.CreateClient(reqBody.Client, reqBody.Likes)
+	for i, v := range *reqBody.Likes {
+		preferences[i] = enjin.Preference(v)
+	}
+
+	err := proxy.CreateClient(*reqBody.Client, preferences)
 
 	if err != nil {
+		panic(err)
 	}
 }
 
 func main() {
 	defer proxy.Close()
 
-	http.HandleFunc("/clients/", clientsHandler)
-	http.HandleFunc("/preferences/", preferencesHandler)
-	http.HandleFunc("/rand/", randHandler)
+	http.HandleFunc("/clients", clientsHandler)
+	http.HandleFunc("/preferences", preferencesHandler)
+	http.HandleFunc("/rand", randHandler)
 	http.HandleFunc("/", handler)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))

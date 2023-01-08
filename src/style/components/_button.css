@@ -1,0 +1,13 @@
+.button {
+    cursor: pointer;
+    border-radius: 100vmax;
+    text-decoration: none;
+    display: inline-flex;
+}
+
+.button:hover,
+.button:focus-visible { opacity: 50%; }
+
+.button[data-type="inverted"] {
+
+}

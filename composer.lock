@@ -102,12 +102,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/http-message-impl.git",
-                "reference": "3d5dbf45579f087896de88f770300e9787003292"
+                "reference": "0e522937833afbb7d62133d4a7efc4647f086272"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/http-message-impl/zipball/3d5dbf45579f087896de88f770300e9787003292",
-                "reference": "3d5dbf45579f087896de88f770300e9787003292",
+                "url": "https://api.github.com/repos/torres-developer/http-message-impl/zipball/0e522937833afbb7d62133d4a7efc4647f086272",
+                "reference": "0e522937833afbb7d62133d4a7efc4647f086272",
                 "shasum": ""
             },
             "require": {
@@ -153,12 +153,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/MVCBase.git",
-                "reference": "19d201ae2b80dac9d0c9d068e9158390489ee700"
+                "reference": "37563503280029cba2863b8528ff2dcefe3a2b4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/19d201ae2b80dac9d0c9d068e9158390489ee700",
-                "reference": "19d201ae2b80dac9d0c9d068e9158390489ee700",
+                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/37563503280029cba2863b8528ff2dcefe3a2b4d",
+                "reference": "37563503280029cba2863b8528ff2dcefe3a2b4d",
                 "shasum": ""
             },
             "require": {

@@ -60,10 +60,10 @@ the same ones but without -precomposed
 <link rel="license" href="/about">
 -->
 
-<!--[if gt IE 8]><!--><link href="<?=baseurl("style.css?v=13aug2022")?>" rel="stylesheet" title="Default Style" /><!--<![endif]-->
-<!--[if lte IE 8]><link href="<?=baseurl("legacy.css?v=13aug2022")?>" rel="stylesheet" title="Default Style Legacy" /><![endif]-->
+<!--[if gt IE 8]><!--><link href="<?=baseurl("assets/css/style.css?v=13aug2022")?>" rel="stylesheet" title="Default Style" /><!--<![endif]-->
+<!--[if lte IE 8]><link href="<?=baseurl("assets/css/legacy.css?v=13aug2022")?>" rel="stylesheet" title="Default Style Legacy" /><![endif]-->
 
-<link href="<?=baseurl("legacy.css?v=13aug2022")?>" rel="alternate stylesheet" title="Default Style Legacy" />
+<link href="<?=baseurl("assets/css/legacy.css?v=13aug2022")?>" rel="alternate stylesheet" title="Default Style Legacy" />
 <!-- <link href="fancy.css" rel="stylesheet" title="Fancy" /> -->
 <!-- <link href="basic.css" rel="alternate stylesheet" title="Basic" /> -->
 
@@ -115,5 +115,5 @@ Content security policy content-security-policy
 <![endif]-->
 
 <!--<link rel="preload" as="image" type="image/webp" href="/logo.webp">-->
-<script defer type="module" src="<?=baseurl("webp-in-css/polyfill.js")?>"></script>
+<script defer type="module" src="<?=baseurl("assets/js/webp-in-css/polyfill.js")?>"></script>
 <script defer type="module" src="https://unpkg.com/avif-in-css/polyfill.js"></script>

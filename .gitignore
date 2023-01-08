@@ -1,7 +1,9 @@
 /public/assets/fonts
+/public/assets/css
 
 /config/credentials.json
 /config/databaseConfig.php
 /resources/schema.sql
 
 /vendor/
+/node_modules/

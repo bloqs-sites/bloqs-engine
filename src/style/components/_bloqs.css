@@ -1,0 +1,81 @@
+#items {
+    display: grid;
+    width: calc(var(--width) + 2 * var(--gap));
+    width: 100%;
+    grid-template-columns: repeat(var(--columns), 1fr);
+    /* grid-auto-rows: calc(var(--width) / var(--columns)); */
+    grid-template-rows: repeat(auto-fill, auto);
+    grid-auto-flow: row;
+    margin: auto;
+    gap: var(--gap);
+}
+
+#items div {
+    color: white;
+    border-radius: var(--shadow);
+    background-color: var(--clr-light-10);
+    padding: .333em;
+    width: 100%;
+    padding-bottom: 100%;
+    overflow-y: auto;
+}
+
+#items div.top {
+    box-shadow: 0 -.75em var(--clr-light-10);
+}
+
+#items div.bottom {
+    box-shadow: 0 .75em var(--clr-light-10);
+}
+
+#items div.left {
+    box-shadow: -.75em 0 var(--clr-light-10);
+}
+
+#items div.right {
+    box-shadow: .75em 0 var(--clr-light-10);
+}
+
+#items div.top.bottom {
+    box-shadow: 0 -.75em var(--clr-light-10), 0 .75em var(--clr-light-10);
+}
+
+#items div.top.left {
+    box-shadow: 0 -.75em var(--clr-light-10), -.75em 0 var(--clr-light-10);
+}
+
+#items div.top.right {
+    box-shadow: 0 -.75em var(--clr-light-10), .75em 0 var(--clr-light-10);
+}
+
+#items div.bottom.left {
+    box-shadow: 0 .75em var(--clr-light-10), -.75em 0 var(--clr-light-10);
+}
+
+#items div.bottom.right {
+    box-shadow: 0 .75em var(--clr-light-10), .75em 0 var(--clr-light-10);
+}
+
+#items div.left.right {
+    box-shadow: -.75em 0 var(--clr-light-10), .75em 0 var(--clr-light-10);
+}
+
+#items div.top.bottom.left {
+    box-shadow: 0 -.75em var(--clr-light-10), 0 .75em var(--clr-light-10), -.75em 0 var(--clr-light-10);
+}
+
+#items div.top.bottom.right {
+    box-shadow: 0 -.75em var(--clr-light-10), 0 .75em var(--clr-light-10), .75em 0 var(--clr-light-10);
+}
+
+#items div.top.right.left {
+    box-shadow: 0 -.75em var(--clr-light-10), -.75em 0 var(--clr-light-10), .75em 0 var(--clr-light-10);
+}
+
+#items div.bottom.right.left {
+    box-shadow: 0 .75em var(--clr-light-10), -.75em 0 var(--clr-light-10), .75em 0 var(--clr-light-10);
+}
+
+#items div.top.bottom.right.left {
+    box-shadow: 0 -.75em var(--clr-light-10), 0 .75em var(--clr-light-10), -.75em 0 var(--clr-light-10), .75em 0 var(--clr-light-10);
+}

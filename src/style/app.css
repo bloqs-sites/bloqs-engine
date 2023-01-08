@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+/* Abstract files */
+@import "abstracts/_variables.css";
+@import "abstracts/_costum_selectors.css";
+
+/* Vendor Files */
+
+/* Core files */
+@import "core/_reset.css";
+@import "core/_typography.css";
+@import "core/_core.css";
+
+/* Components */
+@import "components/_button.css";
+@import "components/_bloqs.css";
+@import "components/_preferences.css";
+
+/* Layout */
+@import "layout/_nav.css";
+@import "layout/_header.css";
+@import "layout/_footer.css";
+
+/* Sections */
+/* @import "sections/all"; */
+
+/* Pages */
+@import "pages/_index.css";

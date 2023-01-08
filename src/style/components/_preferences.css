@@ -1,0 +1,29 @@
+#preferences-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    gap: 1em;
+
+    margin: 1em;
+}
+
+#preferences-list input[type="checkbox"] + label {
+    cursor: pointer;
+    padding: .333em 1em;
+
+    background-color: var(--clr-light-30);
+    color: black;
+
+    border-radius: 100vmax;
+
+    transition: color 333ms, background-color 333ms, transform .5s;
+}
+
+#preferences-list input[type="checkbox"] + label:hover {
+    transform: scale(1.1, 1.1);
+}
+#preferences-list input[type="checkbox"]:checked + label {
+    background-color: var(--clr-light-10);
+    color: white;
+}

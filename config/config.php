@@ -62,7 +62,7 @@ define("HOMEPAGE", "Market");
 /**
  * @var string Default templates directory.
  */
-define("TEMPLATES", __DIR__ . "/../public/templates/");
+define("TEMPLATES", __DIR__ . "/../src/php/templates/");
 
 /**
  * @var string PATH_SEARCH_PARAMETER Used for routing.

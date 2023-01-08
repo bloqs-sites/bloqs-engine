@@ -1,6 +1,7 @@
 <?php
 
-//defined(HOMEPAGE) OR exit(0)
+HOMEPAGE OR exit(0);
+
 use function TorresDeveloper\MVC\baseurl;
 
 ?>
@@ -114,5 +115,5 @@ Content security policy content-security-policy
 <![endif]-->
 
 <!--<link rel="preload" as="image" type="image/webp" href="/logo.webp">-->
-<script defer src="<?=baseurl("webp-in-css/polyfill.js")?>"></script>
-<script defer src="https://unpkg.com/avif-in-css/polyfill.js"></script>
+<script defer type="module" src="<?=baseurl("webp-in-css/polyfill.js")?>"></script>
+<script defer type="module" src="https://unpkg.com/avif-in-css/polyfill.js"></script>

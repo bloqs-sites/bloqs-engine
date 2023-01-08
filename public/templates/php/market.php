@@ -1,4 +1,4 @@
-<?php //defined(HOMEPAGE) OR exit(0) ?>
+<?php HOMEPAGE OR exit(0) ?>
 
 <!DOCTYPE html>
 
@@ -10,7 +10,7 @@
 <?php $this->render("head") ?>
 </head>
 
-<body>
+<body class="no-js">
 
 <nav id="nav">
 <a href="/client/make">Sign up</a>

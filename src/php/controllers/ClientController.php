@@ -31,12 +31,15 @@ declare(strict_types=1);
 
 namespace TorresDeveloper\BlocksEngine\Controllers;
 
+use TorresDeveloper\HTTPMessage\Headers;
+use TorresDeveloper\HTTPMessage\HTTPVerb;
+use TorresDeveloper\HTTPMessage\Request;
 use TorresDeveloper\MVC\Controller;
 use TorresDeveloper\MVC\DB;
-use TorresDeveloper\MVC\HTTPVerb;
 use TorresDeveloper\MVC\NativeViewLoader;
 use TorresDeveloper\MVC\Route;
 use TorresDeveloper\MVC\View;
+use TorresDeveloper\Pull\Pull;
 
 use function TorresDeveloper\MVC\baseurl;
 
@@ -63,18 +66,19 @@ class ClientController extends Controller
                     "id" => $body["name"],
                 ]);
 
-                $handler = curl_init("http://localhost:8080/clients");
+                $req = new Request(
+                    "http://localhost:8080/clients",
+                    HTTPVerb::POST,
+                    json_encode([
+                        "client" => $body["name"],
+                        "likes" => array_keys($body["preferences"])
+                    ]),
+                );
 
-                curl_setopt($handler, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($handler, CURLOPT_POST, true);
-                curl_setopt($handler, CURLOPT_POSTFIELDS, json_encode([
-                    "client" => $body["name"],
-                    "likes" => array_keys($body["preferences"])
-                ]));
-
-                curl_exec($handler);
-
-                curl_close($handler);
+                Pull::fetch()->start($req->withHeader(
+                    "Content-Type",
+                    "application/javascript"
+                ));
             } catch (\PDOException $e) {
                 if ($e->getCode() == 23000) {
                     return;
@@ -85,13 +89,12 @@ class ClientController extends Controller
             return;
         }
 
-        json_decode(file_get_contents("http://localhost:8080/preferences"), true);
+        $preferences = Pull::fetch()->start(
+            new Request("http://$_SERVER[SERVER_NAME]:8080/preferences")
+        )->getBody()->getContents();
 
         $this->load("sign", [
-            "preferences" => json_decode(
-                file_get_contents("http://localhost:8080/preferences"),
-                true
-            )
+            "preferences" => json_decode($preferences, true)
         ]);
     }
 }

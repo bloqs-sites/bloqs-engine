@@ -1,4 +1,4 @@
-<?php //defined(HOMEPAGE) OR exit(0) ?>
+<?php HOMEPAGE OR exit(0) ?>
 
 <?php $this->render("head") ?>
 
@@ -6,6 +6,7 @@
 
 <form method="POST">
 <p><label>Username: <input name="name" /></label></p>
+<?php if ($preferences): ?>
 <p>Select what are you interested in:</p>
 <div id="preferences-list">
 <?php foreach ($preferences as $p) : ?>
@@ -13,6 +14,7 @@
 <label for="<?=$p?>-preference"><?=$p?></label>
 <?php endforeach; ?>
 </div>
+<?php endif; ?>
 
 <p><button type="submit">Create acc</button></p>
 </form>

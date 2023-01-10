@@ -1,6 +1,6 @@
 <?php
 
-HOMEPAGE OR exit(0);
+HOMEPAGE or exit(0);
 
 use function TorresDeveloper\MVC\baseurl;
 

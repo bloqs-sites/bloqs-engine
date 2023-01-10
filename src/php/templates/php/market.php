@@ -1,4 +1,4 @@
-<?php HOMEPAGE OR exit(0) ?>
+<?php HOMEPAGE or exit(0) ?>
 
 <!DOCTYPE html>
 

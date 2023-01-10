@@ -1,4 +1,4 @@
-<?php HOMEPAGE OR exit(0) ?>
+<?php HOMEPAGE or exit(0) ?>
 
 <?php $this->render("head") ?>
 
@@ -6,13 +6,13 @@
 
 <form method="POST">
 <p><label>Username: <input name="name" /></label></p>
-<?php if ($preferences): ?>
+<?php if ($preferences) : ?>
 <p>Select what are you interested in:</p>
 <div id="preferences-list">
-<?php foreach ($preferences as $p) : ?>
+    <?php foreach ($preferences as $p) : ?>
 <input class="visually-hidden" type="checkbox" id="<?=$p?>-preference" name="preferences[<?=$p?>]" />
 <label for="<?=$p?>-preference"><?=$p?></label>
-<?php endforeach; ?>
+    <?php endforeach; ?>
 </div>
 <?php endif; ?>
 

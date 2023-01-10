@@ -87,8 +87,7 @@ class ClientController extends Controller
                 }
             }
 
-            echo PHP_EOL . "LOCATION";
-            //$this->res->withHeader("Location", baseurl());
+            $this->res->withHeader("Location", baseurl());
             return;
         }
 

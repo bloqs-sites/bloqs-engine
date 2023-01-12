@@ -43,6 +43,60 @@
             "time": "2017-09-11T21:05:23+00:00"
         },
         {
+            "name": "psr/container",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/container.git",
+                "reference": "90db7b9ac2a2c5b849fcb69dde58f3ae182c68f5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/90db7b9ac2a2c5b849fcb69dde58f3ae182c68f5",
+                "reference": "90db7b9ac2a2c5b849fcb69dde58f3ae182c68f5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Container\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common Container Interface (PHP FIG PSR-11)",
+            "homepage": "https://github.com/php-fig/container",
+            "keywords": [
+                "PSR-11",
+                "container",
+                "container-interface",
+                "container-interop",
+                "psr"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/container/issues",
+                "source": "https://github.com/php-fig/container/tree/master"
+            },
+            "time": "2022-07-19T17:36:59+00:00"
+        },
+        {
             "name": "psr/http-message",
             "version": "dev-master",
             "source": {
@@ -153,17 +207,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/MVCBase.git",
-                "reference": "b97d7bec162920126d64230eb44342a7e95c037e"
+                "reference": "6a6df6a137323029015c91adab493c7e5776cf8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/b97d7bec162920126d64230eb44342a7e95c037e",
-                "reference": "b97d7bec162920126d64230eb44342a7e95c037e",
+                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/6a6df6a137323029015c91adab493c7e5776cf8e",
+                "reference": "6a6df6a137323029015c91adab493c7e5776cf8e",
                 "shasum": ""
             },
             "require": {
                 "pds/skeleton": "^1.0",
                 "php": ">=8.1.13",
+                "psr/container": "2.0.x-dev",
                 "psr/http-message": "1.0.x-dev",
                 "torres-developer/http-message-impl": "dev-master",
                 "torres-developer/pdo": "dev-master",
@@ -176,11 +231,14 @@
             "type": "library",
             "autoload": {
                 "files": [
-                    "src/consts.php",
-                    "src/globalFunctions.php"
+                    "src/globalFunctions.php",
+                    "src/consts.php"
                 ],
                 "psr-4": {
-                    "TorresDeveloper\\MVC\\": "src/"
+                    "TorresDeveloper\\MVC\\": "src/",
+                    "TorresDeveloper\\MVC\\Core\\": "src/core/",
+                    "TorresDeveloper\\MVC\\Config\\": "src/config/",
+                    "TorresDeveloper\\MVC\\Container\\": "src/container/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",

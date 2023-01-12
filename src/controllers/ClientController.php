@@ -53,8 +53,8 @@ use function TorresDeveloper\MVC\baseurl;
 class ClientController extends Controller
 {
     #[Route]
-    #[View(NativeViewLoader::class, TEMPLATES . "/php")]
-    #[DB(DEFAULT_DB)]
+    #[View(NativeViewLoader::class)]
+    #[DB()]
     public function make(): void
     {
         if ($this->getVerb() === HTTPVerb::POST) {
@@ -95,7 +95,7 @@ class ClientController extends Controller
             new Request("http://$_SERVER[SERVER_NAME]:8080/preferences")
         )->getBody()->getContents();
 
-        $this->load("sign", [
+        $this->load("php/sign", [
             "preferences" => json_decode($preferences, true)
         ]);
     }

@@ -47,9 +47,9 @@ use TorresDeveloper\MVC\View;
 class MarketController extends Controller
 {
     #[Route]
-    #[View(NativeViewLoader::class, TEMPLATES . "/php")]
+    #[View(NativeViewLoader::class)]
     public function index(): void
     {
-        $this->load("market");
+        $this->load("php/market");
     }
 }

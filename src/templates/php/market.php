@@ -1,5 +1,3 @@
-<?php HOMEPAGE or exit(0) ?>
-
 <!DOCTYPE html>
 
 <html lang="en"

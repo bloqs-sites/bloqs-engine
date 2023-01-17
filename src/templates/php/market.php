@@ -12,6 +12,7 @@
 
 <nav id="nav">
 <a href="/client/make">Sign up</a>
+<a href="/client/auth">Log in</a>
 </nav>
 
 <header>

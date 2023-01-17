@@ -38,9 +38,13 @@ use TorresDeveloper\MVC\DB;
 use TorresDeveloper\MVC\NativeViewLoader;
 use TorresDeveloper\MVC\Route;
 use TorresDeveloper\MVC\View;
+use TorresDeveloper\PdoWrapperAPI\Core\QueryBuilder;
 use TorresDeveloper\Pull\Pull;
 
 use function TorresDeveloper\MVC\baseurl;
+use function TorresDeveloper\MVC\now;
+use function TorresDeveloper\MVC\unix;
+use function TorresDeveloper\Pull\pull;
 
 /**
  * The Controller to manage the client session
@@ -54,46 +58,77 @@ class ClientController extends Controller
 {
     #[Route]
     #[View(NativeViewLoader::class)]
-    #[DB()]
+    #[DB]
+    public function auth(): void
+    {
+        if ($this->getVerb() === HTTPVerb::POST) {
+            $data = $this->getQueryBuilder()
+                ->select()
+                ->from("client")
+                ->where("id", QueryBuilder::EQ, $this->body("name"))
+                ->run()
+                ->fetchAll(\PDO::FETCH_ASSOC);
+
+            if ($data) {
+                $token = pull(
+                    "http://localhost:8080/auth",
+                    HTTPVerb::POST,
+                    json_encode(["client" => $this->body("name")]),
+                    ["Content-Type" => "application/javascript"]
+                );
+
+                setcookie(
+                    "bloqs_auth",
+                    $token,
+                    unix(now()->add(new \DateInterval("PT15M"))),
+                    //secure: true,
+                    httponly: true
+                );
+
+                $this->res = $this->res
+                    ->withHeader("Location", baseurl())
+                    ->withStatus(301);
+
+                return;
+            }
+        }
+
+        $this->load("php/log");
+    }
+
+    #[Route]
+    #[View(NativeViewLoader::class)]
+    #[DB]
     public function make(): void
     {
         if ($this->getVerb() === HTTPVerb::POST) {
-            $body = $this->req->getParsedBody();
-
             try {
                 $this->db->insert("client", [
-                    "id" => $body["name"],
+                    "id" => $this->body("name"),
                 ]);
 
-                $req = new Request(
+                pull(
                     "http://localhost:8080/clients",
                     HTTPVerb::POST,
                     json_encode([
-                        "client" => $body["name"],
-                        "likes" => array_keys($body["preferences"] ?? [])
+                        "client" => $this->body("name"),
+                        "likes" => array_keys($this->body("preferences") ?? [])
                     ]),
+                    ["Content-Type" => "application/javascript"]
                 );
-
-                $req = $req->withHeader(
-                    "Content-Type",
-                    "application/javascript"
-                );
-
-                var_dump($req->getBody()->getContents());
-                Pull::fetch()->start($req);
             } catch (\PDOException $e) {
                 if ($e->getCode() == 23000) {
                     return;
                 }
             }
 
-            $this->res->withHeader("Location", baseurl());
+            $this->res = $this->res
+                ->withHeader("Location", baseurl())
+                ->withStatus(201);
             return;
         }
 
-        $preferences = Pull::fetch()->start(
-            new Request("http://$_SERVER[SERVER_NAME]:8080/preferences")
-        )->getBody()->getContents();
+        $preferences = pull("http://$_SERVER[SERVER_NAME]:8080/preferences");
 
         $this->load("php/sign", [
             "preferences" => json_decode($preferences, true)

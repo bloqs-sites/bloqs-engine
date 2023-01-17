@@ -1,4 +1,8 @@
-<?php use function \TorresDeveloper\MVC\baseurl; ?>
+<?php
+
+use function TorresDeveloper\MVC\baseurl;
+
+?>
 
 <meta charset="utf-8" />
 <title>PAP</title>

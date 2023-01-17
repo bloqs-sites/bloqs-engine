@@ -56,7 +56,7 @@ class Config extends AbstractConfig
         $entries["debug_trace"] = true;
         $entries["charset"] = "UTF-8";
         $entries["default_controller"] = "Market";
-        $entries["templates"] =$entries["root"] . "/src/templates/";
+        $entries["templates"] = $entries["root"] . "/src/templates/";
         $entries["path_search_param"] = "path";
 
         return $entries;

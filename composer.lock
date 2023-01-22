@@ -265,12 +265,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/MVCBase.git",
-                "reference": "1527a4eb9257c9404aad03151e88d4b719aaf883"
+                "reference": "c428e1911b9ba20e7eb976d536479d83b765d41a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/1527a4eb9257c9404aad03151e88d4b719aaf883",
-                "reference": "1527a4eb9257c9404aad03151e88d4b719aaf883",
+                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/c428e1911b9ba20e7eb976d536479d83b765d41a",
+                "reference": "c428e1911b9ba20e7eb976d536479d83b765d41a",
                 "shasum": ""
             },
             "require": {
@@ -295,6 +295,7 @@
                 "psr-4": {
                     "TorresDeveloper\\MVC\\": "src/",
                     "TorresDeveloper\\MVC\\Core\\": "src/core/",
+                    "TorresDeveloper\\MVC\\Model\\": "src/model/",
                     "TorresDeveloper\\MVC\\Config\\": "src/config/",
                     "TorresDeveloper\\MVC\\Container\\": "src/container/"
                 }

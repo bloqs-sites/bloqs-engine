@@ -26,7 +26,8 @@
         "psr-4": {
             "TorresDeveloper\\BlocksEngine\\": "src/php/",
             "TorresDeveloper\\BlocksEngine\\Config\\": "config/",
-            "TorresDeveloper\\BlocksEngine\\Controllers\\": "src/controllers"
+            "TorresDeveloper\\BlocksEngine\\Controllers\\": "src/controllers",
+            "TorresDeveloper\\BlocksEngine\\Models\\": "src/models"
         }
     },
     "minimum-stability": "dev",

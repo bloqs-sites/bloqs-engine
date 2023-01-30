@@ -43,33 +43,17 @@ use TorresDeveloper\MVC\Model\Model;
  */
 class Client extends Model
 {
-    public function toArray(): array
+    protected function toArray(): array
     {
         return (array) $this;
     }
 
-    public function toJSON(): string
-    {
-        return json_encode($this);
-    }
-
-    public function toCVS(): string
-    {
-        return (string) $this;
-    }
-
-    public function toTVS(): string
-    {
-        return (string) $this;
-    }
-
-    public function toXML(): string
-    {
-        return (string) $this;
-    }
-
     public function __toString(): string
     {
-        return (string) $this;
+        return "";
+    }
+
+    public function jsonSerialize(): mixed
+    {
     }
 }

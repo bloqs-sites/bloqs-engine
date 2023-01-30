@@ -32,14 +32,12 @@ declare(strict_types=1);
 namespace TorresDeveloper\BlocksEngine\Controllers;
 
 use TorresDeveloper\HTTPMessage\HTTPVerb;
-use TorresDeveloper\HTTPMessage\Request;
-use TorresDeveloper\MVC\Controller;
-use TorresDeveloper\MVC\DB;
-use TorresDeveloper\MVC\NativeViewLoader;
-use TorresDeveloper\MVC\Route;
-use TorresDeveloper\MVC\View;
+use TorresDeveloper\MVC\Controller\Controller;
+use TorresDeveloper\MVC\Controller\DB;
+use TorresDeveloper\MVC\Controller\Route;
+use TorresDeveloper\MVC\View\Loader\NativeViewLoader;
+use TorresDeveloper\MVC\View\View;
 use TorresDeveloper\PdoWrapperAPI\Core\QueryBuilder;
-use TorresDeveloper\Pull\Pull;
 
 use function TorresDeveloper\MVC\baseurl;
 use function TorresDeveloper\MVC\now;
@@ -54,7 +52,7 @@ use function TorresDeveloper\Pull\pull;
  * @since 0.0.3
  * @version 0.0.2
  */
-class ClientController extends Controller
+class Client extends Controller
 {
     #[Route]
     #[View(NativeViewLoader::class)]

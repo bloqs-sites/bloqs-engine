@@ -212,19 +212,23 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/http-message-impl.git",
-                "reference": "1289727554e834f6b67a2f8b02c4e0364b15457e"
+                "reference": "135f7b4a8d472833ffa903a708dfa6c862a07354"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/http-message-impl/zipball/1289727554e834f6b67a2f8b02c4e0364b15457e",
-                "reference": "1289727554e834f6b67a2f8b02c4e0364b15457e",
+                "url": "https://api.github.com/repos/torres-developer/http-message-impl/zipball/135f7b4a8d472833ffa903a708dfa6c862a07354",
+                "reference": "135f7b4a8d472833ffa903a708dfa6c862a07354",
                 "shasum": ""
             },
             "require": {
                 "pds/skeleton": "^1.0",
                 "php": ">=8.1.13",
                 "psr/http-factory": "^1.0@dev",
-                "psr/http-message": "1.0.x-dev"
+                "psr/http-message": "^1.0@dev"
+            },
+            "provide": {
+                "psr/http-factory-implementation": "^1.0@dev",
+                "psr/http-message-implementation": "^1.0@dev"
             },
             "default-branch": true,
             "type": "library",
@@ -246,18 +250,20 @@
                     "role": "Developer"
                 }
             ],
-            "description": "Implemantation of the psr-7",
+            "description": "Implemantation of the psr-7, psr-17",
             "homepage": "https://github.com/torres-developer/http-message-impl",
             "keywords": [
                 "implemantation",
                 "psr",
+                "psr-17",
                 "psr-7"
             ],
             "support": {
+                "docs": "https://www.php-fig.org/psr/",
                 "issues": "https://github.com/torres-developer/http-message-impl/issues",
                 "source": "https://github.com/torres-developer/http-message-impl/"
             },
-            "time": "2023-01-07T00:00:00+00:00"
+            "time": "2023-01-29T00:00:00+00:00"
         },
         {
             "name": "torres-developer/mvc",
@@ -265,22 +271,24 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/MVCBase.git",
-                "reference": "c428e1911b9ba20e7eb976d536479d83b765d41a"
+                "reference": "2216d24ebc933268ea92d52574f4db8ac18e8816"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/c428e1911b9ba20e7eb976d536479d83b765d41a",
-                "reference": "c428e1911b9ba20e7eb976d536479d83b765d41a",
+                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/2216d24ebc933268ea92d52574f4db8ac18e8816",
+                "reference": "2216d24ebc933268ea92d52574f4db8ac18e8816",
                 "shasum": ""
             },
             "require": {
                 "pds/skeleton": "^1.0",
                 "php": ">=8.1.13",
-                "psr/container": "2.0.x-dev",
-                "psr/http-message": "1.0.x-dev",
+                "psr/container": "^2.0@dev",
                 "torres-developer/http-message-impl": "dev-master",
                 "torres-developer/pdo": "dev-master",
                 "torres-developer/pull": "dev-master"
+            },
+            "provide": {
+                "psr/container-implementation": "^2.0@dev"
             },
             "default-branch": true,
             "bin": [
@@ -295,9 +303,14 @@
                 "psr-4": {
                     "TorresDeveloper\\MVC\\": "src/",
                     "TorresDeveloper\\MVC\\Core\\": "src/core/",
+                    "TorresDeveloper\\MVC\\View\\": "src/view/",
                     "TorresDeveloper\\MVC\\Model\\": "src/model/",
                     "TorresDeveloper\\MVC\\Config\\": "src/config/",
-                    "TorresDeveloper\\MVC\\Container\\": "src/container/"
+                    "TorresDeveloper\\MVC\\Throws\\": "src/throws/",
+                    "TorresDeveloper\\MVC\\Traits\\": "src/traits/",
+                    "TorresDeveloper\\MVC\\Container\\": "src/container/",
+                    "TorresDeveloper\\MVC\\Controller\\": "src/controller/",
+                    "TorresDeveloper\\MVC\\View\\Loader\\": "src/view/implementation/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -322,7 +335,7 @@
                 "issues": "https://github.com/torres-developer/MVCBase/issues",
                 "source": "https://github.com/torres-developer/MVCBase/"
             },
-            "time": "2022-10-26T00:00:00+00:00"
+            "time": "2023-01-29T00:00:00+00:00"
         },
         {
             "name": "torres-developer/pdo",

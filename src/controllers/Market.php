@@ -31,10 +31,10 @@ declare(strict_types=1);
 
 namespace TorresDeveloper\BlocksEngine\Controllers;
 
-use TorresDeveloper\MVC\Controller;
-use TorresDeveloper\MVC\NativeViewLoader;
-use TorresDeveloper\MVC\Route;
-use TorresDeveloper\MVC\View;
+use TorresDeveloper\MVC\Controller\Controller;
+use TorresDeveloper\MVC\Controller\Route;
+use TorresDeveloper\MVC\View\Loader\NativeViewLoader;
+use TorresDeveloper\MVC\View\View;
 
 /**
  * The default Controller.
@@ -44,7 +44,7 @@ use TorresDeveloper\MVC\View;
  * @since 0.0.3
  * @version 0.0.2
  */
-class MarketController extends Controller
+class Market extends Controller
 {
     #[Route]
     #[View(NativeViewLoader::class)]

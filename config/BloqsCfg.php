@@ -31,34 +31,17 @@ declare(strict_types=1);
 
 namespace Bloqs\Config;
 
-use TorresDeveloper\MVC\Config\Config as AbstractConfig;
+use Bloqs\Core\AccountType;
+use TorresDeveloper\MVC\Config\Config;
 
-/**
- * The Config for the MVC App
- *
- * @author João Torres <torres.dev@disroot.org>
- *
- * @since 0.0.3
- * @version 0.0.2
- */
-class Config extends AbstractConfig
+class BloqsCfg extends Config
 {
     protected function getEntries(): array
     {
         $entries = [];
-        $entries["root"] = __DIR__ . "/..";
-        $entries["public"] = $entries["root"] . "/public";
-        $entries["domain"] = $_SERVER["SERVER_NAME"];
-        $entries["uri"] = "http://{$_SERVER["HTTP_HOST"]}/";
-        $entries["db_cfg"] = __DIR__ . "/databaseConfig.php";
-        $entries["default_db"] = "default";
-        $entries["debug"] = true;
-        $entries["debug_lvl"] = E_ALL;
-        $entries["debug_trace"] = true;
-        $entries["charset"] = "UTF-8";
-        $entries["default_controller"] = "Market";
-        $entries["templates"] = $entries["root"] . "/src/templates/";
-        $entries["path_search_param"] = "path";
+
+        $entries["acc_typs"] = AccountType::ORGANIZATION | AccountType::PERSON;
+        $entries["allow_adult_consideration"] = true;
 
         return $entries;
     }

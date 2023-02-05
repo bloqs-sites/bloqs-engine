@@ -2,7 +2,7 @@
 
 /**
  *        MVCBase - A base for a MVC.
- *        Copyright (C) 2022  João Torres
+ *        Copyright (C) 2022-2023  João Torres
  *
  *        This program is free software: you can redistribute it and/or modify
  *        it under the terms of the GNU Affero General Public License as
@@ -17,12 +17,13 @@
  *        You should have received a copy of the GNU Affero General Public License
  *        along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
+ * @package Bloqs\\Core
  * @author João Torres <torres.dev@disroot.org>
- * @copyright Copyright (C) 2022  João Torres
+ * @copyright Copyright (C) 2022-2023  João Torres
  * @license https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License
  * @license https://opensource.org/licenses/AGPL-3.0 GNU Affero General Public License version 3
  *
- * @since 1.0.0
+ * @since 0.15.0
  * @version 1.0.0
  */
 
@@ -30,14 +31,14 @@ declare(encoding="UTF-8");
 
 declare(strict_types=1);
 
-namespace Bloqs;
+namespace Bloqs\Core;
 
-use \TorresDeveloper\MVC\MVC;
+final class AccountType
+{
+    const PERSON = 0b1;
+    const ORGANIZATION = 0b10;
 
-if (!__NAMESPACE__) {
-    throw new \Exception("Define a PSR-4 namespace");
+    private function __construct()
+    {
+    }
 }
-
-require __DIR__ . "/../vendor/autoload.php";
-
-MVC::run(__NAMESPACE__);

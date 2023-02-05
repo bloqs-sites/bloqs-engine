@@ -24,10 +24,10 @@
     },
     "autoload": {
         "psr-4": {
-            "TorresDeveloper\\BlocksEngine\\": "src/php/",
-            "TorresDeveloper\\BlocksEngine\\Config\\": "config/",
-            "TorresDeveloper\\BlocksEngine\\Controllers\\": "src/controllers",
-            "TorresDeveloper\\BlocksEngine\\Models\\": "src/models"
+            "Bloqs\\Config\\": "config/",
+            "Bloqs\\Controllers\\": "src/controllers",
+            "Bloqs\\Models\\": "src/models",
+            "Bloqs\\Core\\": "src/core"
         }
     },
     "minimum-stability": "dev",

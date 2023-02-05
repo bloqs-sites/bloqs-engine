@@ -31,29 +31,12 @@ declare(strict_types=1);
 
 namespace TorresDeveloper\BlocksEngine\Models;
 
-use TorresDeveloper\MVC\Model\Model;
-
-/**
- * Client Model
- *
- * @author João Torres <torres.dev@disroot.org>
- *
- * @since 0.0.3
- * @version 0.0.2
- */
-class Client extends Model
+class AggregateRating extends Rating
 {
-    protected function toArray(): array
-    {
-        return (array) $this;
-    }
+    private Product $itemReviewed;
 
-    public function __toString(): string
+    final public function getItemReviewed(): Product
     {
-        return "";
-    }
-
-    public function jsonSerialize(): mixed
-    {
+        return $this->itemReviewed;
     }
 }

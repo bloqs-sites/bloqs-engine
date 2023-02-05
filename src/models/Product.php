@@ -17,7 +17,7 @@
  *    You should have received a copy of the GNU Affero General Public License
  *    along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * @package TorresDeveloper\\BlocksEngine\\Config
+ * @package TorresDeveloper\\BlocksEngine\\Models
  * @author João Torres <torres.dev@disroot.org>
  * @copyright Copyright (C) 2022-2023 João Torres
  * @license https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License
@@ -29,37 +29,35 @@
 
 declare(strict_types=1);
 
-namespace Bloqs\Config;
+namespace TorresDeveloper\BlocksEngine\Models;
 
-use TorresDeveloper\MVC\Config\Config as AbstractConfig;
+use TorresDeveloper\MVC\Model\Model;
+use TorresDeveloper\MVC\Model\Table;
 
 /**
- * The Config for the MVC App
+ * Product Model
  *
  * @author João Torres <torres.dev@disroot.org>
  *
  * @since 0.0.3
  * @version 0.0.2
  */
-class Config extends AbstractConfig
+#[Table("bloqs")]
+class Product extends Model
 {
-    protected function getEntries(): array
-    {
-        $entries = [];
-        $entries["root"] = __DIR__ . "/..";
-        $entries["public"] = $entries["root"] . "/public";
-        $entries["domain"] = $_SERVER["SERVER_NAME"];
-        $entries["uri"] = "http://{$_SERVER["HTTP_HOST"]}/";
-        $entries["db_cfg"] = __DIR__ . "/databaseConfig.php";
-        $entries["default_db"] = "default";
-        $entries["debug"] = true;
-        $entries["debug_lvl"] = E_ALL;
-        $entries["debug_trace"] = true;
-        $entries["charset"] = "UTF-8";
-        $entries["default_controller"] = "Market";
-        $entries["templates"] = $entries["root"] . "/src/templates/";
-        $entries["path_search_param"] = "path";
+    private AggregateRating $aggregateRating;
 
-        return $entries;
+    protected function toArray(): array
+    {
+        return (array) $this;
+    }
+
+    public function __toString(): string
+    {
+        return "";
+    }
+
+    public function jsonSerialize(): mixed
+    {
     }
 }

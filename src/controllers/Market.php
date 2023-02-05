@@ -29,7 +29,7 @@
 
 declare(strict_types=1);
 
-namespace TorresDeveloper\BlocksEngine\Controllers;
+namespace Bloqs\Controllers;
 
 use TorresDeveloper\MVC\Controller\Controller;
 use TorresDeveloper\MVC\Controller\Route;

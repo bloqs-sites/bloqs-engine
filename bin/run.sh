@@ -24,3 +24,4 @@ go mod tidy
 go run server.go &
 cd "$folder" || exit
 php -S "$ip":"$port" -t "$folder"/public
+# php -S "$ip":"$port" "$folder"/public/index.php

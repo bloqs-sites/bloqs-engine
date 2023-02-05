@@ -17,7 +17,7 @@
  *    You should have received a copy of the GNU Affero General Public License
  *    along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * @package TorresDeveloper\\BlocksEngine\\Controllers
+ * @package Bloqs\\Controllers
  * @author João Torres <torres.dev@disroot.org>
  * @copyright Copyright (C) 2022-2023 João Torres
  * @license https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License
@@ -29,8 +29,11 @@
 
 declare(strict_types=1);
 
-namespace TorresDeveloper\BlocksEngine\Controllers;
+namespace Bloqs\Controllers;
 
+use Bloqs\Config\BloqsCfg;
+use Bloqs\Core\ClientData;
+use Bloqs\Models\Person;
 use TorresDeveloper\HTTPMessage\HTTPVerb;
 use TorresDeveloper\MVC\Controller\Controller;
 use TorresDeveloper\MVC\Controller\DB;
@@ -40,8 +43,6 @@ use TorresDeveloper\MVC\View\View;
 use TorresDeveloper\PdoWrapperAPI\Core\QueryBuilder;
 
 use function TorresDeveloper\MVC\baseurl;
-use function TorresDeveloper\MVC\now;
-use function TorresDeveloper\MVC\unix;
 use function TorresDeveloper\Pull\pull;
 
 /**
@@ -75,13 +76,7 @@ class Client extends Controller
                     ["Content-Type" => "application/javascript"]
                 );
 
-                setcookie(
-                    "bloqs_auth",
-                    $token,
-                    unix(now()->add(new \DateInterval("PT15M"))),
-                    //secure: true,
-                    httponly: true
-                );
+                ClientData::setToken($token);
 
                 $this->res = $this->res
                     ->withHeader("Location", baseurl())
@@ -101,9 +96,14 @@ class Client extends Controller
     {
         if ($this->getVerb() === HTTPVerb::POST) {
             try {
-                $this->db->insert("client", [
-                    "id" => $this->body("name"),
-                ]);
+                $person = new Person($this->db);
+                $person->setId($this->body("name"));
+                $person->setEmail($this->body("email"));
+                $person->setPassword($this->body("passwd"));
+                $person->setAdultConsideration((bool) $this->body(
+                    "adultConsideration"
+                ));
+                $person->insert();
 
                 pull(
                     "http://localhost:8080/clients",
@@ -123,13 +123,16 @@ class Client extends Controller
             $this->res = $this->res
                 ->withHeader("Location", baseurl())
                 ->withStatus(201);
+
             return;
         }
 
         $preferences = pull("http://$_SERVER[SERVER_NAME]:8080/preferences");
 
         $this->load("php/sign", [
-            "preferences" => json_decode($preferences, true)
+            "preferences" => json_decode($preferences, true),
+            "adultAllowed" => BloqsCfg::getCfg()
+                ->tryGet("allow_adult_consideration"),
         ]);
     }
 }

@@ -271,12 +271,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/MVCBase.git",
-                "reference": "2216d24ebc933268ea92d52574f4db8ac18e8816"
+                "reference": "1fdf320f3157d0b6689269b9e602015cc09d2a07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/2216d24ebc933268ea92d52574f4db8ac18e8816",
-                "reference": "2216d24ebc933268ea92d52574f4db8ac18e8816",
+                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/1fdf320f3157d0b6689269b9e602015cc09d2a07",
+                "reference": "1fdf320f3157d0b6689269b9e602015cc09d2a07",
                 "shasum": ""
             },
             "require": {
@@ -285,10 +285,15 @@
                 "psr/container": "^2.0@dev",
                 "torres-developer/http-message-impl": "dev-master",
                 "torres-developer/pdo": "dev-master",
+                "torres-developer/polyglot": "dev-master",
                 "torres-developer/pull": "dev-master"
             },
             "provide": {
                 "psr/container-implementation": "^2.0@dev"
+            },
+            "suggest": {
+                "ext-memecached": "cache of the translations",
+                "torres-developer/polyglot": "Allows easy translation of error messages, anything you want actually"
             },
             "default-branch": true,
             "bin": [
@@ -304,6 +309,7 @@
                     "TorresDeveloper\\MVC\\": "src/",
                     "TorresDeveloper\\MVC\\Core\\": "src/core/",
                     "TorresDeveloper\\MVC\\View\\": "src/view/",
+                    "TorresDeveloper\\MVC\\Extra\\": "src/extra/",
                     "TorresDeveloper\\MVC\\Model\\": "src/model/",
                     "TorresDeveloper\\MVC\\Config\\": "src/config/",
                     "TorresDeveloper\\MVC\\Throws\\": "src/throws/",
@@ -394,17 +400,68 @@
             "time": "2022-10-16T00:00:00+00:00"
         },
         {
+            "name": "torres-developer/polyglot",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/torres-developer/polyglot.git",
+                "reference": "b1b125a5070271bca1a5c3fe21b54e6a13e5c28e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/torres-developer/polyglot/zipball/b1b125a5070271bca1a5c3fe21b54e6a13e5c28e",
+                "reference": "b1b125a5070271bca1a5c3fe21b54e6a13e5c28e",
+                "shasum": ""
+            },
+            "require": {
+                "pds/skeleton": "^1.0",
+                "php": ">=8.1.13",
+                "torres-developer/pull": "dev-master"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "TorresDeveloper\\Polyglot\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "torres-developer",
+                    "email": "torres.dev@disroot.org",
+                    "homepage": "https://github.com/torres-developer",
+                    "role": "Developer"
+                }
+            ],
+            "description": "An library that gives an interface to easily use the LibreTranslate web service.",
+            "homepage": "https://github.com/torres-developer/polyglot",
+            "keywords": [
+                "argos-translate",
+                "libretranslate",
+                "translation"
+            ],
+            "support": {
+                "issues": "https://github.com/torres-developer/polyglot/issues",
+                "source": "https://github.com/torres-developer/polyglot/"
+            },
+            "time": "2023-01-28T00:00:00+00:00"
+        },
+        {
             "name": "torres-developer/pull",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/php-pull.git",
-                "reference": "640256234e0149ab3b93f0420d680916b2406f49"
+                "reference": "7d7fad7fed8771b73976632118749b818b8970b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/php-pull/zipball/640256234e0149ab3b93f0420d680916b2406f49",
-                "reference": "640256234e0149ab3b93f0420d680916b2406f49",
+                "url": "https://api.github.com/repos/torres-developer/php-pull/zipball/7d7fad7fed8771b73976632118749b818b8970b5",
+                "reference": "7d7fad7fed8771b73976632118749b818b8970b5",
                 "shasum": ""
             },
             "require": {

@@ -11,8 +11,25 @@
 <body class="no-js">
 
 <nav id="nav">
-<a href="/client/make">Sign up</a>
-<a href="/client/auth">Log in</a>
+
+<img id="logo" src="https://source.unsplash.com/random/144x144" />
+
+<div id="bloqs-hamburger">
+
+<label for="bloqs-a-toggle">➕</label>
+<input type="checkbox" id="bloqs-a-toggle">
+<ul id="bloqs-anchors">
+  <li><a href="#">Create Bloq</a></li>
+  <li><a href="#">Create Organization Account</a></li>
+</ul>
+
+</div>
+
+<ul id="acc-anchors">
+  <li><a href="/client/make">Create Account</a></li>
+  <li><a href="/client/auth">Log In</a></li>
+</ul>
+
 </nav>
 
 <header>

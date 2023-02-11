@@ -12,7 +12,7 @@
     "webp-in-css": "^0.8.0"
   },
   "scripts": {
-    "css": "postcss src/style/app.css | tee public/assets/css/style.css | postcss -u oldie cssnano -o public/assets/css/legacy.css"
+    "css": "postcss src/style/app.css | tee public/assets/css/style.css | postcss -u cssnano -o public/assets/css/legacy.css"
   },
   "dependencies": {
     "ts-node": "^10.9.1"

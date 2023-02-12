@@ -65,7 +65,7 @@ class Person extends Model
         if ($len > 0xFE) {
             throw new \InvalidArgumentException("Invalid e-mail $email: "
                 . "To long");
-        } else if ($len < 5) {
+        } elseif ($len < 5) {
             throw new \InvalidArgumentException("Invalid e-mail $email: "
                 . "To short");
         }

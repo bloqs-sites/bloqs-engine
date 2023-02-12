@@ -27,12 +27,11 @@
  */
 
 declare(encoding="UTF-8");
-
 declare(strict_types=1);
 
 namespace Bloqs;
 
-use \TorresDeveloper\MVC\MVC;
+use TorresDeveloper\MVC\MVC;
 
 if (!__NAMESPACE__) {
     throw new \Exception("Define a PSR-4 namespace");

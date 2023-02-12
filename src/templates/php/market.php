@@ -14,7 +14,7 @@
 
 <img id="logo" src="https://source.unsplash.com/random/144x144" />
 
-<?php if ($logged): ?>
+<?php if ($logged) : ?>
 <div id="bloqs-hamburger">
 
 <label for="bloqs-a-toggle">+</label>
@@ -27,7 +27,7 @@
 </div>
 
 <p><span><?=$logged["id"]?></span></p>
-<?php else: ?>
+<?php else : ?>
 <ul id="acc-anchors">
   <li><a href="/client/make">Create Account</a></li>
   <li><a href="/client/auth">Log In</a></li>

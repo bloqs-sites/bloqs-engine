@@ -16,16 +16,18 @@ body {
   color: var(--clr-light-10);
   background-color: var(--clr-light-60) ;
 
-  margin: 1em auto;
-  max-width: 80ch;
-  padding: 0 .5625em;
-
   font-size: clamp(var(--fs-4), .15625vw + 1rem, var(--fs-5));
   font-family: var(--ff-ss-primary);
 }
 
+main {
+  margin: 1em auto;
+  max-width: 80ch;
+  padding: 0 .5625em;
+}
+
 @media (min-width: 96em) {
-    body {
+    main {
         max-width: 120ch;
     }
 }

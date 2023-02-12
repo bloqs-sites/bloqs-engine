@@ -6,9 +6,9 @@ header {
 }
 
 header h1 {
-    color: var(--clr-light-10);
+    color: #7EB7C3;
     font-size: var(--fs-display-1);
-    font-weight: 700;
+    font-weight: 400;
     text-align: center;
 }
 
@@ -31,6 +31,7 @@ header form {
 }
 
 #search {
+    font-size: var(--fs-4);
     width: 100%;
     background-color: transparent;
     border: 0px solid transparent;
@@ -43,6 +44,8 @@ header form {
 }
 
 #trends-text {
+    font-size: var(--fs-4);
+    color: #416168;
     text-align: center;
 }
 

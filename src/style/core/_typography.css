@@ -1,7 +1,7 @@
 @font-face {
     font-family: "glyphicons";
-    src: url("assets/fonts/bd3cd73e-5ff1-4b63-aad7-d7867e2d4e76.eot");
-    src: local("glyphicons"), local("glyphicons_halflingsregular"), url("assets/fonts/bd3cd73e-5ff1-4b63-aad7-d7867e2d4e76.eot?#iefix") format("embedded-opentype"), url("assets/fonts/5c919219-c9e0-4aa7-a1b6-ce89014f0311.woff") format("woff"), url("assets/fonts/1911e0d1-01a0-4d16-839f-68ae29c7705b.ttf") format("truetype"), url("assets/fonts/7e5eebaf-2950-4e59-aeb4-b97436d67315.svg#glyphicons_halflingsregular") format("svg");
+    src: url("/assets/fonts/bd3cd73e-5ff1-4b63-aad7-d7867e2d4e76.eot");
+    src: local("glyphicons"), local("glyphicons_halflingsregular"), url("/assets/fonts/bd3cd73e-5ff1-4b63-aad7-d7867e2d4e76.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/5c919219-c9e0-4aa7-a1b6-ce89014f0311.woff") format("woff"), url("/assets/fonts/1911e0d1-01a0-4d16-839f-68ae29c7705b.ttf") format("truetype"), url("/assets/fonts/7e5eebaf-2950-4e59-aeb4-b97436d67315.svg#glyphicons_halflingsregular") format("svg");
     font-weight: normal;
     font-style: normal;
 }

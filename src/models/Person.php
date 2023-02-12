@@ -112,7 +112,6 @@ class Person extends Model
 
             $response = intval(fgets($fp, 4));
 
-            var_dump($response);
             if ($response === 250) {
                 $valid = true;
                 break;
@@ -123,7 +122,6 @@ class Person extends Model
             fclose($fp);
         }
 
-        var_dump($valid);
         $this->email = $email;
     }
 
@@ -143,7 +141,7 @@ class Person extends Model
             "id" => $this->id,
             "email" => $this->email,
             "password" => $this->password,
-            "adultConsideration" => $this->adultConsideration,
+            "adultConsideration" => (int) $this->adultConsideration,
         ];
     }
 

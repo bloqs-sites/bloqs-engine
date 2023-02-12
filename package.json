@@ -1,7 +1,7 @@
 {
   "devDependencies": {
     "autoprefixer": "^10.4.13",
-    "colorguard": "^1.2.1",
+    "colorguard": "^0.3.0",
     "cssnano": "^5.1.14",
     "cssnano-preset-advanced": "^5.3.9",
     "oldie": "^1.3.0",

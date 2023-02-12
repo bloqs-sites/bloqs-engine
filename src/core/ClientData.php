@@ -39,7 +39,8 @@ use function TorresDeveloper\MVC\config;
 
 final class ClientData
 {
-    public const TOKEN = "__Host-bloqs-auth";
+    //public const TOKEN = "__Host-bloqs-auth";
+    public const TOKEN = "_Host-bloqs-auth";
 
     private function __construct()
     {
@@ -52,14 +53,13 @@ final class ClientData
 
     public static function getClient(ServerRequestInterface $req): ?array
     {
-        $token = $req->getCookieParams()[self::TOKEN] ?? null;
+        $token = static::getToken($req);
 
         if ($token === null) {
             return $token;
         }
 
-        $payload = explode(".", $token)[1];
-        $payload = json_decode(base64_decode($payload, true), true);
+        return json_decode(base64_decode(explode(".", $token)[1], true), true);
     }
 
     public static function setToken(string $token): void
@@ -67,8 +67,8 @@ final class ClientData
         setcookie(self::TOKEN, $token, [
             "expires" => 0,
             "path" => "/",
-            "domain" => config()->get("uri"),
-            "secure" => true,
+            "domain" => config()->get("domain"),
+            //"secure" => true,
             "httponly" => true,
             "samesite" => "Strict"
         ]);

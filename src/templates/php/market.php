@@ -14,9 +14,10 @@
 
 <img id="logo" src="https://source.unsplash.com/random/144x144" />
 
+<?php if ($logged): ?>
 <div id="bloqs-hamburger">
 
-<label for="bloqs-a-toggle">➕</label>
+<label for="bloqs-a-toggle">+</label>
 <input type="checkbox" id="bloqs-a-toggle">
 <ul id="bloqs-anchors">
   <li><a href="#">Create Bloq</a></li>
@@ -25,12 +26,17 @@
 
 </div>
 
+<p><span><?=$logged["id"]?></span></p>
+<?php else: ?>
 <ul id="acc-anchors">
   <li><a href="/client/make">Create Account</a></li>
   <li><a href="/client/auth">Log In</a></li>
 </ul>
+<?php endif; ?>
 
 </nav>
+
+<main>
 
 <header>
 <h1>Bloqs</h1>
@@ -75,6 +81,8 @@
 <div class=""></div>
 <div class=""></div>
 </div>
+
+</main>
 
 </body>
 

@@ -31,6 +31,7 @@ declare(strict_types=1);
 
 namespace Bloqs\Controllers;
 
+use Bloqs\Core\ClientData;
 use TorresDeveloper\MVC\Controller\Controller;
 use TorresDeveloper\MVC\Controller\Route;
 use TorresDeveloper\MVC\View\Loader\NativeViewLoader;
@@ -50,6 +51,8 @@ class Market extends Controller
     #[View(NativeViewLoader::class)]
     public function index(): void
     {
-        $this->load("php/market");
+        $this->load("php/market", [
+            "logged" => ClientData::getClient($this->req)
+        ]);
     }
 }

@@ -124,6 +124,8 @@ class Client extends Controller
                 ->withHeader("Location", baseurl())
                 ->withStatus(201);
 
+            echo "<a href="/">HOME</a>";
+
             return;
         }
 

@@ -8,29 +8,41 @@
 
 <body class="no-js">
 
-<form method="POST">
+    <main id="account-creation">
+        <hgroup>
+            <h1>Welcome to Bloqs!</h1>
+            <p>Create an Account</p>
+        </hgroup>
 
-<p><label>Username: <input name="name" /></label></p>
-<p><label>E-mail: <input type="email" name="email" /></label></p>
-<p><label>Password: <input type="password" name="passwd" /></label></p>
+        <form method="POST">
+            <?php if (is_iterable($preferences)) : ?>
+                <p>Select what are you interested in:</p>
+                <div id="preferences-list">
+                    <?php foreach ($preferences as $p) : ?>
+                        <input class="visually-hidden" type="checkbox" id="<?= preg_replace("/\s+/", "-", $p) ?>-preference" name="preferences[<?= $p ?>]" />
+                        <label for="<?= preg_replace("/\s+/", "-", $p) ?>-preference"><?= $p ?></label>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
 
-<?php if (is_iterable($preferences)) : ?>
-    <p>Select what are you interested in:</p>
-    <div id="preferences-list">
-        <?php foreach ($preferences as $p) : ?>
-            <input class="visually-hidden" type="checkbox" id="<?= $p ?>-preference" name="preferences[<?= $p ?>]" />
-            <label for="<?= $p ?>-preference"><?= $p ?></label>
-        <?php endforeach; ?>
-    </div>
-<?php endif; ?>
+            <div id="text-inputs">
+                <p><label for="form-name">Username</label></p>
+                <p><input name="name" id="form-name" /></p>
 
-<?php if ($adultAllowed === true) : ?>
-<p><label>Do you want to possibly be exposed to adult consideration content? <input type="checkbox" name="adult" /></label></p>
-<?php endif; ?>
+                <p><label for="form-email">E-mail</label></p>
+                <p><input type="email" name="email" id="form-email" /></p>
 
-<p><button type="submit">Create acc</button></p>
+                <p><label for="form-passwd">Password</label></p>
+                <p><input type="password" name="passwd" id="form-passwd" /></p>
+            </div>
 
-</form>
+            <?php if ($adultAllowed === true) : ?>
+                <p id="age-consideration"><label><input type="checkbox" />Do you want to possibly be exposed to adult consideration content?</label></p>
+            <?php endif; ?>
+
+            <p><button type="submit">Submit!</button></p>
+        </form>
+    </main>
 
 </body>
 

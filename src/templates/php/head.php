@@ -113,5 +113,5 @@ Content security policy content-security-policy
 <![endif]-->
 
 <!--<link rel="preload" as="image" type="image/webp" href="/logo.webp">-->
-<script defer type="module" src="<?=baseurl("assets/js/webp-in-css/polyfill.js")?>"></script>
-<script defer type="module" src="https://unpkg.com/avif-in-css/polyfill.js"></script>
+<script type="module" src="/assets/js/webp-in-css/polyfill.js"></script>
+<script type="module" src="https://unpkg.com/avif-in-css/polyfill.js"></script>

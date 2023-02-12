@@ -90,6 +90,18 @@ class Client extends Controller
     }
 
     #[Route]
+    public function deauth(): void
+    {
+        ClientData::unsetToken($this->req);
+
+        $this->res = $this->res
+            ->withHeader("Location", baseurl())
+            ->withStatus(301);
+
+        return;
+    }
+
+    #[Route]
     #[View(NativeViewLoader::class)]
     #[DB]
     public function make(): void

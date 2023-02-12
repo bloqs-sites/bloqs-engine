@@ -103,3 +103,7 @@ label[for="bloqs-a-toggle"] {
     border-radius: 0.333rem;
     padding: 0.333rem 0.75rem;
 }
+
+#user-id {
+    font-family: var(--ff-monospace);
+}

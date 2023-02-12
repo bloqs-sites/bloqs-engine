@@ -31,7 +31,7 @@ declare(strict_types=1);
 
 namespace Bloqs\Models;
 
-use TorresDeveloper\MVC\Model\Model;
+use TorresDeveloper\MVC\Model\RESTModel;
 use TorresDeveloper\MVC\Model\Table;
 
 use function TorresDeveloper\MVC\config;
@@ -47,7 +47,7 @@ use const TorresDeveloper\MVC\EMAIL_REGEX;
  * @version 0.0.2
  */
 #[Table("client")]
-class Person extends Model
+class Person extends RESTModel
 {
     private string $id;
     private string $email;
@@ -135,7 +135,7 @@ class Person extends Model
         $this->adultConsideration = $adultConsideration;
     }
 
-    protected function toArray(): array
+    public function toArray(): array
     {
         return [
             "id" => $this->id,

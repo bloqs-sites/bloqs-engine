@@ -5,7 +5,11 @@
     xml:lang="en">
 
 <head>
-<?php $this->render("head") ?>
+<?php
+
+use function TorresDeveloper\MVC\baseurl;
+
+ $this->render("head") ?>
 </head>
 
 <body class="no-js">
@@ -26,7 +30,8 @@
 
 </div>
 
-<p><span><?=$logged["id"]?></span></p>
+<p><span id="user-id"><?=$logged["id"]?></span></p>
+<p><a href="/client/deauth">Log out</a></p>
 <?php else : ?>
 <ul id="acc-anchors">
   <li><a href="/client/make">Create Account</a></li>

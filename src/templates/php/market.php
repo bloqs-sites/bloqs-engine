@@ -24,7 +24,7 @@ use function TorresDeveloper\MVC\baseurl;
 <label for="bloqs-a-toggle">+</label>
 <input type="checkbox" id="bloqs-a-toggle">
 <ul id="bloqs-anchors">
-  <li><a href="#">Create Bloq</a></li>
+  <li><a href="/bloq/make">Create Bloq</a></li>
   <li><a href="#">Create Organization Account</a></li>
 </ul>
 

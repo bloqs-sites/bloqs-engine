@@ -1,14 +1,25 @@
 #account-creation {
     width: 80ch;
     margin: auto;
+    color: var(--clr-dark-60);
 }
 
 #account-creation form {
     margin: auto;
+    font-weight: 900;
 }
 
 #account-creation hgroup * {
     text-align: center;
+}
+
+#account-creation hgroup h1 {
+    font-weight: 500;
+}
+
+#account-creation hgroup p {
+    font-weight: 300;
+    font-size: var(--fs-5);
 }
 
 #text-inputs {

@@ -8,22 +8,21 @@
     margin: 1em;
 }
 
-#preferences-list input[type="checkbox"] + label {
+#preferences-list label:has(input[type="checkbox"]) {
     cursor: pointer;
     padding: .333em 1em;
 
     background-color: var(--clr-light-30);
-    color: black;
+    color: var(--clr-light-60);
+    font-size: var(--fs-6);
+    font-weight: 500;
 
     border-radius: 100vmax;
 
-    transition: color 333ms, background-color 333ms, transform .5s;
+    transition: color 333ms, background-color 333ms;
 }
 
-#preferences-list input[type="checkbox"] + label:hover {
-    transform: scale(1.1, 1.1);
-}
-#preferences-list input[type="checkbox"]:checked + label {
+#preferences-list label:has(input[type="checkbox"]:checked) {
     background-color: var(--clr-light-10);
     color: white;
 }

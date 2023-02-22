@@ -3,7 +3,11 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 
 <head>
-    <?php $this->render("head") ?>
+    <?php
+
+    use Bloqs\Models\Category;
+
+    $this->render("head") ?>
 </head>
 
 <body class="no-js">
@@ -19,8 +23,9 @@
                 <p>Select what are you interested in:</p>
                 <div id="preferences-list">
                     <?php foreach ($preferences as $p) : ?>
-                        <input class="visually-hidden" type="checkbox" id="<?= preg_replace("/\s+/", "-", $p) ?>-preference" name="preferences[<?= $p ?>]" />
-                        <label for="<?= preg_replace("/\s+/", "-", $p) ?>-preference"><?= $p ?></label>
+                        <?php if ($p instanceof Category) : ?>
+                            <label><input class="visually-hidden" type="checkbox" name="preferences[<?= $p->getId() ?>]" /><?= $p->getName() ?></label>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>

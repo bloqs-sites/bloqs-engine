@@ -33,6 +33,7 @@ namespace Bloqs\Controllers;
 
 use Bloqs\Config\BloqsCfg;
 use Bloqs\Core\ClientData;
+use Bloqs\Models\Category;
 use Bloqs\Models\Person;
 use TorresDeveloper\HTTPMessage\HTTPVerb;
 use TorresDeveloper\MVC\Controller\Controller;
@@ -42,6 +43,7 @@ use TorresDeveloper\MVC\View\Loader\NativeViewLoader;
 use TorresDeveloper\MVC\View\View;
 use TorresDeveloper\PdoWrapperAPI\Core\QueryBuilder;
 
+use function Bloqs\Core\api;
 use function TorresDeveloper\MVC\baseurl;
 use function TorresDeveloper\Pull\pull;
 
@@ -108,7 +110,7 @@ class Client extends Controller
     {
         if ($this->getVerb() === HTTPVerb::POST) {
             try {
-                $person = new Person($this->db);
+                $person = new Person(api());
                 $person->setId($this->body("name"));
                 $person->setEmail($this->body("email"));
                 $person->setPassword($this->body("passwd"));
@@ -136,15 +138,15 @@ class Client extends Controller
                 ->withHeader("Location", baseurl())
                 ->withStatus(201);
 
-            echo "<a href=" / ">HOME</a>";
+            echo "<a href=\"/\">HOME</a>";
 
             return;
         }
 
-        $preferences = pull("http://$_SERVER[SERVER_NAME]:8080/preferences");
+        $preferences = Category::getFinder(api())->run();
 
         $this->load("php/sign", [
-            "preferences" => json_decode($preferences, true),
+            "preferences" => $preferences,
             "adultAllowed" => BloqsCfg::getCfg()
                 ->tryGet("allow_adult_consideration"),
         ]);

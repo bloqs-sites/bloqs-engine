@@ -28,7 +28,10 @@
             "Bloqs\\Controllers\\": "src/controllers",
             "Bloqs\\Models\\": "src/models",
             "Bloqs\\Core\\": "src/core"
-        }
+        },
+        "files": [
+            "src/core/helpers.php"
+        ]
     },
     "minimum-stability": "dev",
     "repositories": [

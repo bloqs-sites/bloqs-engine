@@ -31,110 +31,70 @@ declare(strict_types=1);
 
 namespace Bloqs\Models;
 
-use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
 use TorresDeveloper\MVC\Model\RESTModel;
 use TorresDeveloper\MVC\Model\Table;
 
-use function Bloqs\Core\api;
-
 /**
- * Bloq Model
+ * Client Model
  *
  * @author João Torres <torres.dev@disroot.org>
  *
  * @since 0.0.3
  * @version 0.0.2
  */
-#[Table("bloq")]
-class Product extends RESTModel
+#[Table("preference")]
+class Category extends RESTModel
 {
     private string $name;
     private string $description;
-    private Category $preference;
-    private UploadedFileInterface $image;
-    private bool $hasAdultConsideration;
 
-    public function getId(): string
-    {
+    public function getId(): string {
         return $this->id;
-    }
+}
 
     public function setId(string $id): void
     {
         $this->id = $id;
     }
 
-    public function getName(): string
-    {
+    public function getName(): string {
         return $this->name;
-    }
+}
     public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    public function getDescription(): string
-    {
+    public function getDescription(): string {
         return $this->description;
-    }
+}
     public function setDescription(string $description): void
     {
         $this->description = $description;
-    }
-    public function getPreference(): Category
-    {
-        return $this->preference;
-    }
-    public function setPreference(Category $preference): void
-    {
-        $this->preference = $preference;
-    }
-    public function getImage(): UploadedFileInterface
-    {
-        return $this->image;
-    }
-    public function setImage(UploadedFileInterface $image): void
-    {
-        $this->image = $image;
-    }
-    public function getHasAdultConsideration(): bool
-    {
-        return $this->hasAdultConsideration;
-    }
-    public function setHasAdultConsideration(bool $hasAdultConsideration): void
-    {
-        $this->hasAdultConsideration = $hasAdultConsideration;
     }
 
     public static function fromRESTJSON(UriInterface $endpoint, array $json): ?static
     {
         $o = new static($endpoint);
 
-        if (($json["@type"] ?? null) !== "Product") {
+        if (($json["@type"] ?? null) !== "CategoryCode") {
             return null;
         }
 
         $o->setId((string) $json["id"]);
         $o->setName($json["name"]);
         $o->setDescription($json["description"]);
-        $o->setPreference(Category::getFinder(api())->withID($json["category"])->run()->current());
-        $o->setImage($json["image"]);
-        $o->setHasAdultConsideration($json["hasAdultConsideration"]);
 
         return $o;
     }
 
     public function toArray(): array
     {
-        //var_dump($this->image->getStream()->getMetadata());
         return [
-            "id" => $this->id ?? null,
+            "id" => $this->id,
             "name" => $this->name,
             "description" => $this->description,
-            "category" => $this->preference->getId(),
-            "image" => !isset($this->image) ? null : new \CURLFile($this->image->getClientFilename(), $this->image->getClientMediaType()),
-            "hasAdultConsideration" => (int) $this->hasAdultConsideration
         ];
     }
 

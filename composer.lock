@@ -212,12 +212,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/http-message-impl.git",
-                "reference": "69ab3c1d3b8308d9f0b034205ad260ee4883918a"
+                "reference": "c42522314c76efaf9c79e2187e479afa19ad7423"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/http-message-impl/zipball/69ab3c1d3b8308d9f0b034205ad260ee4883918a",
-                "reference": "69ab3c1d3b8308d9f0b034205ad260ee4883918a",
+                "url": "https://api.github.com/repos/torres-developer/http-message-impl/zipball/c42522314c76efaf9c79e2187e479afa19ad7423",
+                "reference": "c42522314c76efaf9c79e2187e479afa19ad7423",
                 "shasum": ""
             },
             "require": {
@@ -271,12 +271,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/MVCBase.git",
-                "reference": "155c6055d4ad3bd50676c120b92b9c8ddc3f578e"
+                "reference": "bb534bb56adf3ae94c97fd4ebbbbec09f6ad72d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/155c6055d4ad3bd50676c120b92b9c8ddc3f578e",
-                "reference": "155c6055d4ad3bd50676c120b92b9c8ddc3f578e",
+                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/bb534bb56adf3ae94c97fd4ebbbbec09f6ad72d1",
+                "reference": "bb534bb56adf3ae94c97fd4ebbbbec09f6ad72d1",
                 "shasum": ""
             },
             "require": {
@@ -456,12 +456,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/php-pull.git",
-                "reference": "7d7fad7fed8771b73976632118749b818b8970b5"
+                "reference": "3a9c90df75bf179a5450e6af946d136844c6383b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/php-pull/zipball/7d7fad7fed8771b73976632118749b818b8970b5",
-                "reference": "7d7fad7fed8771b73976632118749b818b8970b5",
+                "url": "https://api.github.com/repos/torres-developer/php-pull/zipball/3a9c90df75bf179a5450e6af946d136844c6383b",
+                "reference": "3a9c90df75bf179a5450e6af946d136844c6383b",
                 "shasum": ""
             },
             "require": {

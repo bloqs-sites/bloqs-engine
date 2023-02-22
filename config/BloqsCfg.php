@@ -32,14 +32,14 @@ declare(strict_types=1);
 namespace Bloqs\Config;
 
 use Bloqs\Core\AccountType;
+use TorresDeveloper\HTTPMessage\URI;
 use TorresDeveloper\MVC\Config\Config;
 
 class BloqsCfg extends Config
 {
     protected function getEntries(): array
     {
-        $entries = [];
-
+        $entries["rest_api"] = new URI("http://localhost:8089/");
         $entries["acc_typs"] = AccountType::ORGANIZATION | AccountType::PERSON;
         $entries["allow_adult_consideration"] = true;
 

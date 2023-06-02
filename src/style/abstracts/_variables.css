@@ -5,6 +5,15 @@
     --xl: 80em;
     --2xl: 96em;
 
+    --clr-light-60: rgb(230 230 230);
+    --clr-light-30: rgb(153 153 153);
+    --clr-light-10: rgb(0 0 0);
+
+    --clr-dark-60: rgb(26 26 26);
+    --clr-dark-30: rgb(102 102 102);
+    --clr-dark-10: rgb(255 255 255);
+
+    /*
     --clr-light-60: hsl(192 62% 94%);
     --clr-light-30: hsl(166 45% 72%);
     --clr-light-10: hsl(146 57% 40%);
@@ -12,6 +21,11 @@
     --clr-dark-60: hsl(192 62% 6%);
     --clr-dark-30: hsl(166 45% 28%);
     --clr-dark-10: hsl(146 57% 60%);
+    */
+
+    --clr-60: var(--clr-light-60);
+    --clr-30: var(--clr-light-30);
+    --clr-10: var(--clr-light-10);
 
     --ff-s-garamond: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman";
     --ff-s-lucida-bright: "Lucida Bright", Georgia;

@@ -30,7 +30,8 @@
             "Bloqs\\Core\\": "src/core"
         },
         "files": [
-            "src/core/helpers.php"
+            "src/core/helpers.php",
+            "src/core/config.php"
         ]
     },
     "minimum-stability": "dev",

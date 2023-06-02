@@ -78,7 +78,7 @@ class Client extends Controller
                     ["Content-Type" => "application/javascript"]
                 );
 
-                ClientData::setToken($token);
+                ClientData::setToken($token->getBody()->getContents());
 
                 $this->res = $this->res
                     ->withHeader("Location", baseurl())

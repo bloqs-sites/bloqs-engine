@@ -17,69 +17,68 @@
  *    You should have received a copy of the GNU Affero General Public License
  *    along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
- * @package TorresDeveloper\\BlocksEngine\\Controllers
+ * @package Bloqs\\Controllers
  * @author João Torres <torres.dev@disroot.org>
- * @copyright Copyright (C) 2022 João Torres
+ * @copyright Copyright (C) 2022-2023 João Torres
  * @license https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License
  * @license https://opensource.org/licenses/AGPL-3.0 GNU Affero General Public License version 3
  *
- * @since 0.0.3
- * @version 0.0.2
+ * @since 0.0.5
+ * @version 0.0.1
  */
 
 declare(strict_types=1);
 
 namespace Bloqs\Controllers;
 
-use Bloqs\Core\ClientData;
-use TorresDeveloper\HTTPMessage\HTTPVerb;
 use TorresDeveloper\MVC\Controller\Controller;
-use TorresDeveloper\MVC\Controller\MethodsAllowed;
 use TorresDeveloper\MVC\Controller\Route;
 use TorresDeveloper\MVC\View\Loader\NativeViewLoader;
 use TorresDeveloper\MVC\View\View;
 
 use function Bloqs\Config\cnf;
-use function Bloqs\Config\hist;
-use function Bloqs\Config\provide;
-use function Bloqs\Config\provider;
 use function TorresDeveloper\MVC\baseurl;
+use function TorresDeveloper\MVC\debug;
 
 /**
- * The default Controller.
+ * The Controller to manage the client credentials
  *
  * @author João Torres <torres.dev@disroot.org>
  *
  * @since 0.0.3
  * @version 0.0.2
  */
-class Market extends Controller
+class Credentials extends Controller
 {
     #[Route]
     #[View(NativeViewLoader::class)]
     public function index(): void
     {
-        $this->load("php/market", [
-            "logged" => ClientData::getClient($this->req),
-            "provider" => provider(),
-            "name" => cnf("name") ?? "",
-            "fav_instances" => null,
-            "instances_hist" => hist(),
-        ]);
-    }
+        if (cnf() === null) {
+            $this->res = $this->res
+                ->withStatus(308)
+                ->withHeader("Location", baseurl());
 
-    #[Route]
-    #[MethodsAllowed(HTTPVerb::POST)]
-    public function provide(): void
-    {
-        $provider = $this->body("instance");
-
-        if ($provider !== null) {
-            provide($provider);
+            return;
         }
 
-        $this->res = $this->res
-            ->withStatus(308)
-            ->withHeader("Location", baseurl("market/index"));
+        $type = $this->req->getQueryParams()[cnf("auth", "authTypeQueryParam")
+            ?? "type"] ?? null;
+
+        $methods_raw = cnf("auth", "supported") ?? [];
+        $methods = [];
+        foreach ($methods_raw as $i) {
+            $methods[$i] = true;
+        }
+
+        if ($type === null) {
+            $this->load("php/credentials/sign", [
+                "type" => cnf("auth", "authTypeQueryParam") ?? "type",
+                "action" => cnf("auth", "domain") . cnf("auth", "signPath"),
+                "redirect" => cnf("auth", "redirectQueryParam") ?? "redirect",
+                "location" => baseurl("/"),
+                "methods" => $methods,
+            ]);
+        }
     }
 }

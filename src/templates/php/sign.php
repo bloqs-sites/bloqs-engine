@@ -1,17 +1,16 @@
+<?php
+use Bloqs\Models\Category;
+?>
+
 <!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 
 <head>
-    <?php
-
-    use Bloqs\Models\Category;
-
-    $this->render("head") ?>
+<?php $this->render("head") ?>
 </head>
 
 <body class="no-js">
-
     <main id="account-creation">
         <hgroup>
             <h1>Welcome to Bloqs!</h1>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e5c2026350a704e4001a6aad0a53fa31",
+    "content-hash": "29fc265a29fa962b8d987b1a183f2611",
     "packages": [
         {
             "name": "pds/skeleton",
@@ -211,17 +211,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/http-message-impl.git",
-                "reference": "7c82ff060bf58d7c9ee1e436e458966351d9edb4"
+                "reference": "95ec78b5b200285ce70ac79521477a697bb015d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/http-message-impl/zipball/7c82ff060bf58d7c9ee1e436e458966351d9edb4",
-                "reference": "7c82ff060bf58d7c9ee1e436e458966351d9edb4",
+                "url": "https://api.github.com/repos/torres-developer/http-message-impl/zipball/95ec78b5b200285ce70ac79521477a697bb015d4",
+                "reference": "95ec78b5b200285ce70ac79521477a697bb015d4",
                 "shasum": ""
             },
             "require": {
                 "pds/skeleton": "^1.0",
-                "php": ">=8.1.7",
+                "php": ">=8.1.6",
                 "psr/http-factory": "^1.0@dev",
                 "psr/http-message": "^1.0@dev"
             },
@@ -270,12 +270,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/MVCBase.git",
-                "reference": "407fd2ff7d6526375a9114cae25425f7f470ed1b"
+                "reference": "1860d92cda74bf82faab7b0c40566cc0d5ed57c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/407fd2ff7d6526375a9114cae25425f7f470ed1b",
-                "reference": "407fd2ff7d6526375a9114cae25425f7f470ed1b",
+                "url": "https://api.github.com/repos/torres-developer/MVCBase/zipball/1860d92cda74bf82faab7b0c40566cc0d5ed57c5",
+                "reference": "1860d92cda74bf82faab7b0c40566cc0d5ed57c5",
                 "shasum": ""
             },
             "require": {
@@ -404,17 +404,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/polyglot.git",
-                "reference": "6397ca11d56dbc641ccebe92a693195be8e6aa05"
+                "reference": "f0050b3fafff122ae273f92126621e56967e2734"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/polyglot/zipball/6397ca11d56dbc641ccebe92a693195be8e6aa05",
-                "reference": "6397ca11d56dbc641ccebe92a693195be8e6aa05",
+                "url": "https://api.github.com/repos/torres-developer/polyglot/zipball/f0050b3fafff122ae273f92126621e56967e2734",
+                "reference": "f0050b3fafff122ae273f92126621e56967e2734",
                 "shasum": ""
             },
             "require": {
                 "pds/skeleton": "^1.0",
-                "php": ">=8.1.13",
+                "php": ">=8.1.6",
                 "torres-developer/pull": "dev-master"
             },
             "default-branch": true,
@@ -455,18 +455,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/torres-developer/php-pull.git",
-                "reference": "d78759809925b443859015c066133342dbc92bee"
+                "reference": "0118f19966a0534043299e4c437ac246d9b04db5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/torres-developer/php-pull/zipball/d78759809925b443859015c066133342dbc92bee",
-                "reference": "d78759809925b443859015c066133342dbc92bee",
+                "url": "https://api.github.com/repos/torres-developer/php-pull/zipball/0118f19966a0534043299e4c437ac246d9b04db5",
+                "reference": "0118f19966a0534043299e4c437ac246d9b04db5",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
                 "pds/skeleton": "^1.0",
-                "php": ">=8.1.7",
+                "php": ">=8.1.6",
                 "torres-developer/http-message-impl": "dev-master"
             },
             "default-branch": true,
@@ -509,7 +509,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "torres-developer/mvc": 20
+        "torres-developer/mvc": 20,
+        "torres-developer/pull": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

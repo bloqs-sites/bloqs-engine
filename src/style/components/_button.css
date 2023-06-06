@@ -1,8 +1,20 @@
 .button {
     cursor: pointer;
-    border-radius: 100vmax;
+    border-radius: 1rem;
     text-decoration: none;
     display: inline-flex;
+    padding: .333rem;
+    margin: .333rem;
+}
+
+.button.rounded {
+    border-radius: 100vmax;
+}
+
+.button.wide {
+    flex: 1;
+    display: flex;
+    justify-content: center;
 }
 
 .button:hover,

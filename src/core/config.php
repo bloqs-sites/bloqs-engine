@@ -32,6 +32,7 @@ declare(strict_types=1);
 namespace Bloqs\Config;
 
 use function TorresDeveloper\MVC\config;
+use function TorresDeveloper\MVC\debug;
 use function TorresDeveloper\MVC\now;
 use function TorresDeveloper\MVC\unix;
 use function TorresDeveloper\Pull\pull;

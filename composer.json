@@ -20,7 +20,8 @@
         "source": "https://github.com/torres-developer/blocks-engine/"
     },
     "require": {
-        "torres-developer/mvc": "dev-master"
+        "torres-developer/mvc": "dev-master",
+        "torres-developer/pull": "dev-master"
     },
     "autoload": {
         "psr-4": {

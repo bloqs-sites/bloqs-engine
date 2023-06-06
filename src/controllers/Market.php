@@ -44,6 +44,7 @@ use function Bloqs\Config\hist;
 use function Bloqs\Config\provide;
 use function Bloqs\Config\provider;
 use function TorresDeveloper\MVC\baseurl;
+use function TorresDeveloper\MVC\debug;
 
 /**
  * The default Controller.
@@ -59,6 +60,8 @@ class Market extends Controller
     #[View(NativeViewLoader::class)]
     public function index(): void
     {
+        //debug($this->req->getCookieParams());
+
         $this->load("php/market", [
             "logged" => ClientData::getClient($this->req),
             "provider" => provider(),

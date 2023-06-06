@@ -31,7 +31,10 @@ declare(strict_types=1);
 
 namespace Bloqs\Controllers;
 
+use Bloqs\Core\ClientData;
+use TorresDeveloper\HTTPMessage\HTTPVerb;
 use TorresDeveloper\MVC\Controller\Controller;
+use TorresDeveloper\MVC\Controller\MethodsAllowed;
 use TorresDeveloper\MVC\Controller\Route;
 use TorresDeveloper\MVC\View\Loader\NativeViewLoader;
 use TorresDeveloper\MVC\View\View;
@@ -39,6 +42,7 @@ use TorresDeveloper\MVC\View\View;
 use function Bloqs\Config\cnf;
 use function TorresDeveloper\MVC\baseurl;
 use function TorresDeveloper\MVC\debug;
+use function TorresDeveloper\Pull\pull;
 
 /**
  * The Controller to manage the client credentials
@@ -48,11 +52,25 @@ use function TorresDeveloper\MVC\debug;
  * @since 0.0.3
  * @version 0.0.2
  */
-class Credentials extends Controller
+final class Credentials extends Controller
 {
     #[Route]
+    #[MethodsAllowed(HTTPVerb::GET)]
     #[View(NativeViewLoader::class)]
-    public function index(): void
+    public function sign(): void
+    {
+        $this->form("Sign In");
+    }
+
+    #[Route]
+    #[MethodsAllowed(HTTPVerb::GET)]
+    #[View(NativeViewLoader::class)]
+    public function log(): void
+    {
+        $this->form("Log In");
+    }
+
+    private function form(string $title): void
     {
         if (cnf() === null) {
             $this->res = $this->res
@@ -72,13 +90,62 @@ class Credentials extends Controller
         }
 
         if ($type === null) {
-            $this->load("php/credentials/sign", [
-                "type" => cnf("auth", "authTypeQueryParam") ?? "type",
-                "action" => cnf("auth", "domain") . cnf("auth", "signPath"),
-                "redirect" => cnf("auth", "redirectQueryParam") ?? "redirect",
-                "location" => baseurl("/"),
+            $this->load("php/credentials/index", [
+                "title" => $title,
+                "action" => baseurl("credentials"),
                 "methods" => $methods,
             ]);
         }
+    }
+
+    #[Route]
+    #[MethodsAllowed(HTTPVerb::POST)]
+    public function basic(): void
+    {
+        if (cnf() === null) {
+            $this->res = $this->res
+                ->withStatus(308)
+                ->withHeader("Location", baseurl());
+
+            return;
+        }
+
+        $type = cnf("auth", "authTypeQueryParam") ?? "type";
+        $resource = cnf("auth", "domain")
+            . cnf("auth", "logPath")
+            . "?$type=basic";
+
+        try {
+            $res = pull(
+                $resource,
+                HTTPVerb::POST,
+                (array) $this->req->getParsedBody(),
+                [
+                    "Origin" => $this->req->getHeader("Origin")[0],
+                ]
+            );
+        } catch (\Throwable $th) {
+            $th->getMessage();
+            $this->back();
+            return;
+        }
+
+        $body = $res->json();
+
+        if (!($body["validation"]["valid"] ?? false)) {
+            echo $body["validation"]["message"] ?? "";
+            $this->back();
+            return;
+        } else {
+            $tk = $body["token"]["jwt"] ?? null;
+
+            if ($tk) {
+                ClientData::setToken($body["token"]["jwt"]);
+            }
+        }
+
+        $this->res = $this->res
+            ->withStatus(308)
+            ->withHeader("Location", baseurl());
     }
 }

@@ -39,8 +39,8 @@ use function TorresDeveloper\MVC\baseurl;
 <p><a href="/client/deauth">Log out</a></p>
 <?php else : ?>
 <ul id="acc-anchors">
-  <li><a href="/credentials/">Create Account</a></li>
-  <li><a href="/client/auth">Log In</a></li>
+  <li><a href="/credentials/sign/">Create Account</a></li>
+  <li><a href="/credentials/log/">Log In</a></li>
 </ul>
 <?php endif; ?>
 

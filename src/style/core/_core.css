@@ -56,18 +56,22 @@ h6 {
   font-size: clamp(var(--fs-5), .3125vw + 1rem, var(--fs-6));
 }
 
-span.smallcaps { font-variant: small-caps; }
-span.underline { text-decoration: underline; }
+.smallcaps { font-variant: small-caps; }
+.underline { text-decoration: underline; }
 
-div.column {
+.column {
   display: inline-block;
   vertical-align: top;
   width: 50%;
 }
 
-div.hanging-indent {
+.hanging-indent {
   margin-left: 1.5em;
   text-indent: -1.5em;
+}
+
+.flex {
+    display: flex;
 }
 
 code { white-space: pre; }

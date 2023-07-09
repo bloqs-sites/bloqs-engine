@@ -34,6 +34,7 @@ namespace Bloqs\Config;
 use function TorresDeveloper\MVC\config;
 use function TorresDeveloper\MVC\debug;
 use function TorresDeveloper\MVC\now;
+use function TorresDeveloper\MVC\req;
 use function TorresDeveloper\MVC\unix;
 use function TorresDeveloper\Pull\pull;
 
@@ -43,7 +44,7 @@ const HIST = "HIST";
 
 function cnf(string ...$keys): mixed
 {
-    $cnf = ($_SESSION[CONF] ?? null);
+    $cnf = (req()->getCookieParams()[CONF] ?? null);
 
     if (!isset($cnf)) {
         return null;
@@ -76,8 +77,15 @@ function cnf(string ...$keys): mixed
 
 function provide(string $provider): void
 {
-    $res = pull($provider);
-    $_SESSION[CONF] = $res->text();
+    $res = pull($provider)->response();
+    setcookie(CONF, $res->text(), [
+        "expires" => 0,
+        "path" => "/",
+        "domain" => config()->get("domain"),
+        //"secure" => true,
+        //"httponly" => true,
+        "samesite" => "Strict"
+    ]);
     $_SESSION[PROVIDER] = $provider;
 
     appendToProviderHist($provider);

@@ -31,21 +31,21 @@ declare(strict_types=1);
 
 namespace Bloqs\Controllers;
 
-use Bloqs\Config\BloqsCfg;
-use Bloqs\Core\ClientData;
+use Bloqs\Core\Controller;
+use Bloqs\Errors\NoPermissionsException;
 use Bloqs\Models\Category;
 use Bloqs\Models\Person;
 use TorresDeveloper\HTTPMessage\HTTPVerb;
-use TorresDeveloper\MVC\Controller\Controller;
-use TorresDeveloper\MVC\Controller\DB;
+use TorresDeveloper\HTTPMessage\URI;
+use TorresDeveloper\MVC\Controller\MethodsAllowed;
 use TorresDeveloper\MVC\Controller\Route;
 use TorresDeveloper\MVC\View\Loader\NativeViewLoader;
 use TorresDeveloper\MVC\View\View;
-use TorresDeveloper\PdoWrapperAPI\Core\QueryBuilder;
 
-use function Bloqs\Core\api;
+use function Bloqs\Config\cnf;
+use function Bloqs\Core\setProfile;
 use function TorresDeveloper\MVC\baseurl;
-use function TorresDeveloper\Pull\pull;
+use function TorresDeveloper\MVC\debug;
 
 /**
  * The Controller to manage the client session
@@ -57,98 +57,123 @@ use function TorresDeveloper\Pull\pull;
  */
 class Client extends Controller
 {
-    #[Route]
-    #[View(NativeViewLoader::class)]
-    #[DB]
-    public function auth(): void
+    public function before(): void
     {
-        if ($this->getVerb() === HTTPVerb::POST) {
-            $data = $this->getQueryBuilder()
-                ->select()
-                ->from("client")
-                ->where("id", QueryBuilder::EQ, $this->body("name"))
-                ->run()
-                ->fetchAll(\PDO::FETCH_ASSOC);
+        parent::before();
 
-            if ($data) {
-                $token = pull(
-                    "http://localhost:8080/auth",
-                    HTTPVerb::POST,
-                    json_encode(["client" => $this->body("name")]),
-                    ["Content-Type" => "application/javascript"]
-                );
-
-                ClientData::setToken($token->getBody()->getContents());
-
-                $this->res = $this->res
-                    ->withHeader("Location", baseurl())
-                    ->withStatus(301);
-
-                return;
-            }
-        }
-
-        $this->load("php/log");
-    }
-
-    #[Route]
-    public function deauth(): void
-    {
-        ClientData::unsetToken($this->req);
-
-        $this->res = $this->res
-            ->withHeader("Location", baseurl())
-            ->withStatus(301);
-
-        return;
+        $this->needsConf();
+        $this->needsCredentials();
     }
 
     #[Route]
     #[View(NativeViewLoader::class)]
-    #[DB]
-    public function make(): void
+    public function index(): void
     {
-        if ($this->getVerb() === HTTPVerb::POST) {
-            try {
-                $person = new Person(api());
-                $person->setId($this->body("name"));
-                $person->setEmail($this->body("email"));
-                $person->setPassword($this->body("passwd"));
-                $person->setAdultConsideration((bool) $this->body(
-                    "adultConsideration"
-                ));
-                $person->insert();
+        $api = new URI(cnf("REST", "domain"));
 
-                pull(
-                    "http://localhost:8080/clients",
-                    HTTPVerb::POST,
-                    json_encode([
-                        "client" => $this->body("name"),
-                        "likes" => array_keys($this->body("preferences") ?? [])
-                    ]),
-                    ["Content-Type" => "application/javascript"]
-                );
-            } catch (\PDOException $e) {
-                if ($e->getCode() == 23000) {
-                    return;
+        switch ($this->req->getMethod()) {
+            case HTTPVerb::GET->value:
+                $find = Person::getFinder($api)
+                    ->withID(cnf("REST", "myself") ?? "@")
+                    ->run();
+                $profiles = [...$find];
+                /** @var \TorresDeveloper\Pull\Pull $res */
+                $res = $find->getReturn();
+                switch ($res->response()->getStatusCode()) {
+                    case 404:
+                        $profiles = [];
+                        break;
+                    case 401:
+                        $this->redirect(baseurl("credentials/log", [
+                            "redirect" => baseurl("client")
+                        ]));
+                        return;
+                    case 403:
+                        throw new NoPermissionsException($res->response());
                 }
-            }
 
-            $this->res = $this->res
-                ->withHeader("Location", baseurl())
-                ->withStatus(201);
+                $find = Category::getFinder($api)->run();
+                $categories = [...$find];
+                /** @var \TorresDeveloper\Pull\Pull $res */
+                $res = $find->getReturn();
+                switch ($res->response()->getStatusCode()) {
+                    case 404:
+                        $profiles = [];
+                        break;
+                    case 401:
+                        $this->redirect(baseurl("credentials/log", [
+                            "redirect" => baseurl("client")
+                        ]));
+                        return;
+                    case 403:
+                        throw new NoPermissionsException($res->response());
+                }
 
-            echo "<a href=\"/\">HOME</a>";
+                $this->load("php/select_profile", [
+                    "profiles" => $profiles,
+                    "preferences" => $categories,
+                    "adultAllowed" => cnf("REST", "NSFW") ?? false,
+                    "canCreate" => (cnf("REST", "profiles", "max") ?? 1) > count($profiles),
+                ]);
+                return;
+            case HTTPVerb::POST->value:
+                $o = new Person($api);
+                $o->setName($this->body("name"));
+                $o->setDescription($this->body("description"));
+                $image = $this->req->getUploadedFiles()["image"] ?? null;
+                if (isset($image)) {
+                    $o->setImage($image);
+                }
+                $url = $this->body("url");
+                if ($url) {
+                    $o->setUrl(new URI($url));
+                }
+                if ((cnf("REST", "NSFW") ?? false) === true) {
+                    $v = $this->body("adult");
+                    $o->setHasAdultConsideration($v == "1" || $v == "true" || $v == "on" || $v == "yes");
+                }
+                $preferences = array_keys($this->body("preferences") ?? []);
+                foreach ($preferences as $i) {
+                    $like = new Category($api);
+                    $like->setId((string) $i);
+                    $o->addLike($like);
+                }
 
-            return;
+                $o->insert();
+                $res = $o->actionRes();
+                switch ($res->getStatusCode()) {
+                    case 401:
+                        $this->redirect(baseurl("credentials/log", [
+                            "redirect" => baseurl("client")
+                        ]));
+                        return;
+                    case 403:
+                        throw new NoPermissionsException($res);
+                }
+
+                $res = $o->actionRes();
+                if (!$res->ok()) {
+                    debug($res, $res->text());
+                    $this->back();
+                }
+
+                $this->back();
+                return;
+        }
+    }
+
+    #[Route]
+    #[MethodsAllowed(HTTPVerb::POST)]
+    public function select(): void
+    {
+        $api = new URI(cnf("REST", "domain"));
+
+        $o = Person::new($api, $this->body("id"));
+
+        if ($o) {
+            setProfile($o->getId());
         }
 
-        $preferences = Category::getFinder(api())->run();
-
-        $this->load("php/sign", [
-            "preferences" => $preferences,
-            "adultAllowed" => BloqsCfg::getCfg()
-                ->tryGet("allow_adult_consideration"),
-        ]);
+        $this->redirect(baseurl());
     }
 }

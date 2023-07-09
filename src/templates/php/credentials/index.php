@@ -3,7 +3,11 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 
 <head>
-<?php $this->render("head") ?>
+<?php
+
+use function TorresDeveloper\MVC\debug;
+
+ $this->render("head") ?>
 </head>
 
 <body class="no-js">
@@ -14,8 +18,13 @@
 
 <?php if (($methods["basic"] ?? null) === true): ?>
 <section id="basic">
-<form action="<?=$action?>/basic" method="POST">
+<form action="<?=$action?>/basic?redirect=<?=$redirect?>" method="POST">
+<?php if(($type == 1) && isset($client)): ?>
+<input value="<?=$client?>" name="email" type="hidden" autocomplete="email" inputmode="email" />
+<p>Email: <samp><?=$client?></samp></p>
+<?php else: ?>
 <p><label>Email: <input name="email" type="email" autocomplete="email" inputmode="email" /></label></p>
+<?php endif; ?>
 <p><label>Password: <input name="pass" type="password" autocomplete="new-password" /></label></p>
 <p class="flex"><button class="button wide" type="submit"><?=$title?></button></p>
 </form>
@@ -29,7 +38,7 @@
 <?php if (($methods["sso"] ?? null) === true): ?>
 <section id="sso">
 <ul>
-<li><a href="#"><img class="sso-icon" src="TODO" alt="TODO" /></a></li>
+<li><a href="#"><img loading="lazy" decoding="async" class="sso-icon" src="TODO" alt="TODO" /></a></li>
 </ul>
 </section>
 <?php endif; ?>

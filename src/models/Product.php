@@ -31,12 +31,20 @@ declare(strict_types=1);
 
 namespace Bloqs\Models;
 
+use Bloqs\Review\Review;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
+use React\Promise\PromiseInterface;
+use TorresDeveloper\HTTPMessage\URI;
 use TorresDeveloper\MVC\Model\RESTModel;
 use TorresDeveloper\MVC\Model\Table;
 
-use function Bloqs\Core\api;
+use function Bloqs\Core\getToken;
+use function React\Async\async;
+use function React\Async\await;
+use function TorresDeveloper\MVC\baseurl;
+use function TorresDeveloper\MVC\req;
 
 /**
  * Bloq Model
@@ -53,7 +61,23 @@ class Product extends RESTModel
     private string $description;
     private Category $preference;
     private UploadedFileInterface $image;
+    /** @var string[] $keywords */
+    private array $keywords;
     private bool $hasAdultConsideration;
+    private Person|Organization $creator;
+    private \DateTimeImmutable $releaseDate;
+    /** @var \Bloqs\Models\Product[] $related */
+    private array $related;
+    /** @var \Bloqs\Models\Review[] $reviews */
+    private array $reviews;
+    private UriInterface $reviewsUri;
+    private Review $negativeNotes;
+    private Review $positiveNotes;
+
+    public function getReviewsUri(): UriInterface
+    {
+        return $this->reviewsUri;
+    }
 
     public function getId(): string
     {
@@ -98,6 +122,14 @@ class Product extends RESTModel
     {
         $this->image = $image;
     }
+    public function getKeywords(): array
+    {
+        return $this->keywords;
+    }
+    public function setKeywords(array $keywords): void
+    {
+        $this->keywords = $keywords;
+    }
     public function getHasAdultConsideration(): bool
     {
         return $this->hasAdultConsideration;
@@ -106,34 +138,125 @@ class Product extends RESTModel
     {
         $this->hasAdultConsideration = $hasAdultConsideration;
     }
-
-    public static function fromRESTJSON(UriInterface $endpoint, array $json): ?static
+    public function getCreator(): Person|Organization
     {
-        $o = new static($endpoint);
+        return $this->creator;
+    }
+    public function setCreator(Person|Organization $creator): void
+    {
+        $this->creator = $creator;
+    }
+    public function getReviews(): array
+    {
+        return $this->reviews;
+    }
+    public function setReviews(array $reviews): void
+    {
+        $this->reviews = $reviews;
+    }
+    public function getRelated(): array
+    {
+        return $this->related;
+    }
+    public function setRelated(array $related): void
+    {
+        $this->related = $related;
+    }
+    public function getReleaseDate(): \DateTimeInterface
+    {
+        return $this->releaseDate;
+    }
 
-        if (($json["@type"] ?? null) !== "Product") {
-            return null;
-        }
+    public static function manipulateReq(RequestInterface $req): RequestInterface
+    {
+        return $req->withHeader("Authorization", "Bearer " . getToken())
+            ->withHeader("Origin", req()->getHeader("Origin")[0] ?? baseurl());
+    }
 
-        $o->setId((string) $json["id"]);
-        $o->setName($json["name"]);
-        $o->setDescription($json["description"]);
-        $o->setPreference(Category::getFinder(api())->withID($json["category"])->run()->current());
-        $o->setImage($json["image"]);
-        $o->setHasAdultConsideration($json["hasAdultConsideration"]);
+    public static function fromRESTJSON(UriInterface $endpoint, array $json): PromiseInterface
+    {
+        return async(static function () use ($endpoint, $json): ?static {
+            if (($json["@type"] ?? null) !== "Product") {
+                return null;
+            }
 
-        return $o;
+            if (!isset($json["id"])) {
+                return null;
+            }
+
+            $api = $endpoint->withPath("/");
+
+            $o = static::find($api, (string) $json["id"]);
+
+            if (isset($o?->id)) {
+                return $o;
+            }
+
+            $o->setId((string) $json["id"]);
+            $o->setName($json["name"]);
+            $o->setDescription($json["description"]);
+
+            $category = Category::new($api, (string) $json["category"]);
+            if (isset($category)) {
+                $o->setPreference($category);
+            }
+            //$o->setImage($json["image"]);
+            $o->setKeywords($json["keywords"]);
+            $o->setHasAdultConsideration($json["hasAdultConsideration"]);
+            $o->setCreator(Person::new($api, (string) $json["creator"]));
+            $o->releaseDate = \DateTimeImmutable::createFromFormat("Y-m-d\\TH:i:s\\Z", $json["releaseDate"]);
+            $o->reviewsUri = new URI($json["reviews"]);
+            //$reviews = [];
+            //$type = null;
+            //foreach ($json["reviews"] as $r) {
+            //    if (isset($r["@type"])) {
+            //        $type = $r["@type"];
+            //    } else {
+            //        if (isset($type)) {
+            //            $r["@type"] = $type;
+            //        }
+            //    }
+
+            //    $i = Review::fromRESTJSON($api, $r);
+            //    if ($o !== null) {
+            //        $reviews[] = $i;
+            //    }
+            //}
+            //$o->setReviews($reviews);
+            $related = [];
+            $type = null;
+            foreach ($json["related"] as $r) {
+                if (isset($r["@type"])) {
+                    $type = $r["@type"];
+                } else {
+                    if (isset($type)) {
+                        $r["@type"] = $type;
+                    }
+                }
+
+                $i = await(Product::fromRESTJSON($api, $r));
+                if ($i !== null) {
+                    $related[] = $o;
+                }
+            }
+            $o->setReviews($related);
+
+            return $o;
+        })();
     }
 
     public function toArray(): array
     {
-        //var_dump($this->image->getStream()->getMetadata());
         return [
             "id" => $this->id ?? null,
             "name" => $this->name,
             "description" => $this->description,
             "category" => $this->preference->getId(),
             "image" => !isset($this->image) ? null : new \CURLFile($this->image->getClientFilename(), $this->image->getClientMediaType()),
+            "keywords" => $this->keywords,
+            "creator" => $this->creator->getId(),
+            "related" => isset($this->related) ? $this->related : null,
+            "reviews" => isset($this->reviews) ? $this->reviews : null,
             "hasAdultConsideration" => (int) $this->hasAdultConsideration
         ];
     }

@@ -31,6 +31,8 @@ declare(strict_types=1);
 
 namespace TorresDeveloper\BlocksEngine\Models;
 
+use Bloqs\Models\Product;
+
 class AggregateRating extends Rating
 {
     private Product $itemReviewed;

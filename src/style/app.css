@@ -14,7 +14,9 @@
 /* Components */
 @import "components/_button.css";
 @import "components/_bloqs.css";
+@import "components/_bloqs-reviews.css";
 @import "components/_preferences.css";
+@import "components/_preferences-meter.css";
 
 /* Layout */
 @import "layout/_nav.css";
@@ -26,5 +28,8 @@
 
 /* Pages */
 @import "pages/_index.css";
-@import "pages/_acc-make.css";
 @import "pages/_sign-credentials.css";
+@import "pages/_select_profile.css";
+@import "pages/_preferences-manager.css";
+@import "pages/_bloq-creation.css";
+@import "pages/_bloq-info.css";

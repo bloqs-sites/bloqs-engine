@@ -1,0 +1,106 @@
+#profile-selector > #list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+#profile-selector > #list .item {
+    /* width: calc(100% / 2); */
+    box-shadow: 0 0 .333rem var(--clr-60);
+    border-radius: .333rem;
+    min-width: 33%;
+}
+
+#profile-selector > #list > #profiles {
+    display: contents;
+    list-style-type: none;
+}
+
+#profile-selector > #list > #profiles > li.item:hover {
+    opacity: .98;
+}
+
+#profile-selector > #list > #profiles > li.item > form {
+    height: 100%;
+}
+
+#profile-selector > #list > #profiles > li.item > form > button[type="submit"] {
+    padding: 1rem;
+    background-color: transparent;
+    border-style: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-width: 100%;
+}
+
+#profile-selector > #list > #profiles > li.item > form > button[type="submit"] p:first-child {
+    align-self: center;
+}
+
+#profile-selector > #list > #profiles > li.item > form > button[type="submit"] code {
+    margin-left: 1ch;
+    font-size: var(--fs-3);
+    color: var(--clr-10);
+}
+
+#profile-selector > #list > #profiles > li.item > form > button[type="submit"] .lvl {
+    align-self: center;
+}
+
+#profile-selector > #list > #profiles > li.item > form > button[type="submit"] .lvl {
+    align-self: center;
+    font-family: var(--monospace);
+    font-size: var(--fs-3);
+    color: var(--clr-30);
+}
+
+#profile-selector > #list > #profiles > li.item > form > button[type="submit"] .nsfw {
+    width: min-content;
+    font-size: var(--fs-3);
+    background-color: red;
+    border-radius: .5rem;
+    padding: 0 .5rem;
+    color: white;
+    margin: 1rem auto;
+}
+
+#profile-selector > #list > #profiles > li.item > form > button[type="submit"] > hr ~ p {
+    text-align: start;
+}
+
+#profile-selector > #list > #profiles > li.item > form > button[type="submit"] > p:has(.button) {
+    align-self: center;
+    margin-top: auto;
+}
+
+#profile-selector > #list > #create {
+    padding: 1rem;
+    font-size: var(--fs-3);
+}
+
+#profile-selector > #list > #create > form p > label {
+    display: flex;
+    justify-content: space-between;
+}
+
+#profile-selector > #list > #create > form p > label:has(textarea),
+#profile-selector > #list > #create > form p > label:has(input:not([type="checkbox"])) {
+    flex-direction: column;
+}
+
+#profile-selector > #list > #create > form p > label > input[type="url"],
+#profile-selector > #list > #create > form p > label > input[type="text"] {
+    border-style: none;
+    border-bottom: 1px solid black;
+    background-color: transparent;
+}
+
+#profile-selector > #list > #create > form p > label:has(input[type="checkbox"]) {
+    font-size: var(--fs-2);
+}
+
+#profile-selector > #list > #create > form p#age-consideration {
+    margin: 1rem;
+}

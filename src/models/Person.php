@@ -31,12 +31,24 @@ declare(strict_types=1);
 
 namespace Bloqs\Models;
 
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\UploadedFileInterface;
+use Psr\Http\Message\UriInterface;
+use React\Promise\PromiseInterface;
+use TorresDeveloper\HTTPMessage\Request;
+use TorresDeveloper\HTTPMessage\URI;
 use TorresDeveloper\MVC\Model\RESTModel;
 use TorresDeveloper\MVC\Model\Table;
+use TorresDeveloper\Pull\Pull;
 
-use function TorresDeveloper\MVC\config;
-
-use const TorresDeveloper\MVC\EMAIL_REGEX;
+use function Bloqs\Config\cnf;
+use function Bloqs\Core\getToken;
+use function React\Async\async;
+use function React\Async\await;
+use function React\Promise\all;
+use function TorresDeveloper\MVC\baseurl;
+use function TorresDeveloper\MVC\debug;
+use function TorresDeveloper\MVC\req;
 
 /**
  * Client Model
@@ -46,108 +58,313 @@ use const TorresDeveloper\MVC\EMAIL_REGEX;
  * @since 0.0.3
  * @version 0.0.2
  */
-#[Table("client")]
+#[Table("profile")]
 class Person extends RESTModel
 {
-    private string $id;
-    private string $email;
-    private string $password;
-    private bool $adultConsideration;
+    protected string $id;
+    private string $name;
+    private string $description;
+    private string $honorificPrefix;
+    private string $honorificSuffix;
+    private UploadedFileInterface $image;
+    private UriInterface $url;
+    private bool $hasAdultConsideration;
+    private int $level;
+    /** @var \Bloqs\Models\Person[] $followers */
+    private array $followers;
+    private int $followers_count;
+    /** @var \Bloqs\Models\Person[] $following */
+    private array $following;
+    private int $following_count;
+    /** @var \Bloqs\Models\Category[] $likes */
+    private array $likes = [];
+    private array $likesWeight = [];
+    private array $makesOffer;
 
-    public function setId(string $id): void
+    public function setName(string $name): void
     {
-        $this->id = $id;
+        $this->name = $name;
     }
 
-    public function setEmail(string $email): void
+    public function setDescription(string $description): void
     {
-        $len = strlen($email);
-        if ($len > 0xFE) {
-            throw new \InvalidArgumentException("Invalid e-mail $email: "
-                . "To long");
-        } elseif ($len < 5) {
-            throw new \InvalidArgumentException("Invalid e-mail $email: "
-                . "To short");
+        $this->description = $description;
+    }
+
+    public function setHonorificPrefix(string $honorificPrefix): void
+    {
+        $this->honorificPrefix = $honorificPrefix;
+    }
+
+    public function setHonorificSuffix(string $honorificSuffix): void
+    {
+        $this->honorificSuffix = $honorificSuffix;
+    }
+
+    public function setImage(UploadedFileInterface $image): void
+    {
+        $this->image = $image;
+    }
+
+    public function setUrl(UriInterface $uri): void
+    {
+        $this->url = $uri;
+    }
+
+    public function setHasAdultConsideration(bool $hasAdultConsideration): void
+    {
+        $this->hasAdultConsideration = $hasAdultConsideration;
+    }
+
+    public function addFollowers(Person ...$followers): void
+    {
+        foreach ($followers as $i) {
+            $this->followers[$i->getId()] = $i;
+        }
+    }
+
+    public function removeFollowers(Person ...$followers): void
+    {
+        foreach ($followers as $i) {
+            unset($this->followers[$i->getId()]);
+        }
+    }
+
+    public function addFollowing(Person ...$following): void
+    {
+        foreach ($following as $i) {
+            $this->following[$i->getId()] = $i;
+        }
+    }
+
+    public function removeFollowing(Person ...$following): void
+    {
+        foreach ($following as $i) {
+            unset($this->following[$i->getId()]);
+        }
+    }
+
+    public function addLike(Category ...$likes): void
+    {
+        foreach ($likes as $i) {
+            $this->likes[$i->getId()] = $i;
+        }
+    }
+
+    public function removeLike(Category ...$likes): void
+    {
+        foreach ($likes as $i) {
+            unset($this->likes[$i->getId()]);
+        }
+    }
+
+    public function getId(): ?string
+    {
+        return isset($this->id) ? $this->id : null;
+    }
+
+    public function getName(): string
+    {
+        return isset($this->name) ? $this->name : "";
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    public function getHonorificPrefix(): string
+    {
+        return $this->honorificPrefix;
+    }
+
+    public function getHonorificSuffix(): string
+    {
+        return $this->honorificSuffix;
+    }
+
+    public function getImage(): UploadedFileInterface
+    {
+        return $this->image;
+    }
+
+    public function getUrl(): UriInterface
+    {
+        return $this->url;
+    }
+
+    public function getHasAdultConsideration(): bool
+    {
+        return $this->hasAdultConsideration;
+    }
+
+    public function getLevel(): int
+    {
+        return $this->level;
+    }
+
+    /** @return \Bloqs\Models\Person[] */
+    public function getFollowers(): array
+    {
+        return $this->followers;
+    }
+    public function getFollowersCount(): int
+    {
+        return $this->followers_count;
+    }
+
+    /** @return \Bloqs\Models\Person[] */
+    public function getFollowing(): array
+    {
+        return $this->following;
+    }
+    public function getFollowingCount(): int
+    {
+        return $this->following_count;
+    }
+
+    /** @return \Bloqs\Models\Category[] */
+    public function getLikes(): array
+    {
+        return $this->likes;
+    }
+
+    public function getLikeWeight(Category $c): float
+    {
+        return $this->likesWeight[$c->getId()] ?? 0;
+    }
+
+    public function getMakesOffer(UriInterface $api): array
+    {
+        if (isset($this->makesOffer)) {
+            return $this->makesOffer;
         }
 
-        $email = filter_var($email, FILTER_VALIDATE_REGEXP, ["options" => [
-            "regexp" => EMAIL_REGEX
-        ]]);
+        $path = $api->getPath() . "profile/" . $this->id . "/makesOffer";
 
-        if ($email === false) {
-            throw new \InvalidArgumentException("Invalid e-mail $email");
+
+        $req = new Request($api->withPath($path));
+
+        $res = (new Pull($this->manipulateReq($req)))->response();
+
+        if (!$res->ok()) {
+            debug($res->text());
         }
 
-        $domain = explode("@", $email)[1];
-        $mxr = [];
-        $w = [];
-        if (getmxrr($domain, $mxr, $w) === false) {
-            throw new \InvalidArgumentException("Invalid e-mail $email: "
-                . "No MX records were found");
-        }
+        $result = $res->json();
 
-        array_multisort($w, $mxr);
-
-        $mxr[] = $domain;
-
-        $domain = config()->get("domain");
-
-        $valid = false;
-        foreach ($mxr as $mx) {
-            $fp = fsockopen("tcp://" . $mx, 25);
-            $stream = stream_socket_client("tcp://$mx:25");
-
-            if (!$fp) {
-                continue;
+        $promises = [];
+        $this->makesOffer = [];
+        $type = null;
+        foreach ($result as $r) {
+            if (isset($r["@type"])) {
+                $type = $r["@type"];
+            } else {
+                if (isset($type)) {
+                    $r["@type"] = $type;
+                }
             }
 
-            stream_socket_sendto($fp, "HELO $domain\r\n");
-            fputs($fp, "HELO $domain\r\n");
-            stream_socket_sendto($fp, "MAIL FROM: <marado.pen.eng@gmail.com>\r\n");
-            fputs($fp, "MAIL FROM: <marado.pen.eng@gmail.com>\r\n");
-            stream_socket_sendto($fp, "RCPT TO: <$email>\r\n");
-            fputs($fp, "RCPT TO: <$email>\r\n");
-            stream_socket_sendto($fp, "RSET\r\n");
-            fputs($fp, "RSET\r\n");
-
-            $response = intval(fgets($fp, 4));
-
-            if ($response === 250) {
-                $valid = true;
-                break;
-            }
-
-            fputs($fp, "QUIT\r\n");
-            stream_socket_sendto($fp, "QUIT\r\n");
-            fclose($fp);
+            $promises[] =  async(static function () use ($api, $r) {
+                return Product::fromRESTJSON($api, $r);
+            })();
         }
 
-        $this->email = $email;
+        foreach (await(all($promises)) as $i) {
+            if ($i !== null) {
+                $this->makesOffer[] = $i;
+            }
+        };
+
+        return $this->makesOffer;
     }
 
-    public function setPassword(string $password): void
+    public static function manipulateReq(RequestInterface $req): RequestInterface
     {
-        $this->password = password_hash($password, PASSWORD_BCRYPT);
+        return $req->withHeader("Authorization", "Bearer " . getToken())
+            ->withHeader("Origin", req()->getHeader("Origin")[0] ?? baseurl());
     }
 
-    public function setAdultConsideration(bool $adultConsideration): void
+    public static function fromRESTJSON(UriInterface $endpoint, array $json): PromiseInterface
     {
-        $this->adultConsideration = $adultConsideration;
+        return async(static function () use ($endpoint, $json): ?static {
+            if (($json["@type"] ?? null) !== "Person") {
+                return null;
+            }
+
+            if (!isset($json["id"])) {
+                return null;
+            }
+
+            $api = $endpoint->withPath("/");
+
+            $o = static::find($api, (string) $json["id"]);
+
+            if (isset($o?->id)) {
+                return $o;
+            }
+
+            $o->id = (string) $json["id"];
+            $o->setName((string) $json["name"]);
+            $description = $json["description"];
+            if ($description) {
+                $o->setDescription($description);
+            }
+            $url = $json["url"];
+            if ($url) {
+                $o->setUrl(new URI($url));
+            }
+            if ((cnf("REST", "NSFW") ?? false) === true) {
+                $o->setHasAdultConsideration($json["hasAdultConsideration"] ?? false);
+            } else {
+                $o->setHasAdultConsideration(false);
+            }
+            $o->level = $json["level"];
+
+            foreach ($json["likes"] ?? [] as $i) {
+                $c = Category::new($api, (string) $i["id"]);
+                $o->addLike($c);
+                $o->likesWeight[$c->getId()] = $i["weight"];
+            }
+
+            return $o;
+        })();
     }
 
     public function toArray(): array
     {
-        return [
-            "id" => $this->id,
-            "email" => $this->email,
-            "password" => $this->password,
-            "adultConsideration" => (int) $this->adultConsideration,
+        $o = [
+            "name" => $this->name,
+            "description" => isset($this->description) ? $this->description : null,
+            "honorificPrefix" => isset($this->honorificPrefix) ? $this->honorificPrefix : null,
+            "honorificSuffix" => isset($this->honorificSuffix) ? $this->honorificSuffix : null,
+            "url" => ($this->url ?? null)?->__toString() ?? null,
+            "hasAdultConsideration" => isset($this->hasAdultConsideration) ? $this->hasAdultConsideration : false,
+            "followers" => array_map(static fn ($i) => $i->getId(), $this->followers ?? []),
+            "following" => array_map(static fn ($i) => $i->getId(), $this->following ?? []),
+            "likes" => array_map(static fn ($i) => $i->getId(), $this->likes ?? []),
         ];
+
+        if (isset($this->image)) {
+            $path = $this->image->getStream()->detach()?->getRealPath() ?? null;
+            if (isset($path)) {
+                $o["image"] = new \CURLFile(
+                    $this->image->getClientMediaType(),
+                    $this->image->getClientFilename()
+                );
+            }
+        }
+
+        if (isset($this->id)) {
+            $o["id"] = $this->id;
+        }
+
+        return $o;
     }
 
     public function __toString(): string
     {
-        return $this->id . " <" . $this->email . ">";
+        return "";
     }
 
     public function jsonSerialize(): mixed

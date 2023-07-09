@@ -1,18 +1,18 @@
-header {
+.header {
     height: calc(100vh - 4em);
     margin: 1em;
     display: flex;
     flex-direction: column;
 }
 
-header h1 {
-    color: #7EB7C3;
+.header h1 {
+    color: var(--clr-10);
     font-size: var(--fs-display-1);
-    font-weight: 400;
+    font-weight: 900;
     text-align: center;
 }
 
-header form {
+.header form {
     margin: auto 0;
 }
 

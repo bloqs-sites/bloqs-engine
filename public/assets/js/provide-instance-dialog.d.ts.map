@@ -1,1 +1,1 @@
-{"version":3,"file":"provide-instance-dialog.d.ts","sourceRoot":"","sources":["../../../src/scripts/provide-instance-dialog.ts"],"names":[],"mappings":"AAEA,QAAA,MAAM,GAAG,EAAE,MAAmD,CAAC;AAE/D,QAAA,MAAM,SAAS,EAAE,MAAyB,CAAC;AAC3C,QAAA,MAAM,SAAS,EAAE,MAAyB,CAAC;AAC3C,QAAA,MAAM,UAAU,EAAE,MAAmB,CAAC"}
+{"version":3,"file":"provide-instance-dialog.d.ts","sourceRoot":"","sources":["../../../src/scripts/provide-instance-dialog.ts"],"names":[],"mappings":"AAkCA,wBAAgB,gBAAgB,SAuC/B"}

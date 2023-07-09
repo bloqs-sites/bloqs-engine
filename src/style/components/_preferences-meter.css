@@ -1,0 +1,23 @@
+ul.preferences-meter {
+  width: 100%;
+  height: .5rem;
+  border-radius: 100vmax;
+  border: 1px solid var(--clr-60);
+  display: flex;
+  list-style-type: none;
+}
+
+ul.preferences-meter li.preference-fill {
+  --weight: 0;
+  --clr: transparent;
+  height: 100%;
+  width: calc(100% * var(--weight));
+  background-color: var(--clr);
+  border-style: none;
+}
+
+ul.preferences-meter ~ ul {
+  margin: 1rem 0;
+  padding-inline-start: 2rem;
+  text-align: start;
+}

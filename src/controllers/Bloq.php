@@ -31,16 +31,20 @@ declare(strict_types=1);
 
 namespace Bloqs\Controllers;
 
-use Bloqs\Config\BloqsCfg;
+use Bloqs\Core\Controller;
+use Bloqs\Errors\NoPermissionsException;
 use Bloqs\Models\Category;
+use Bloqs\Models\Person;
 use Bloqs\Models\Product;
 use TorresDeveloper\HTTPMessage\HTTPVerb;
-use TorresDeveloper\MVC\Controller\Controller;
+use TorresDeveloper\HTTPMessage\URI;
+use TorresDeveloper\MVC\Controller\MethodsAllowed;
 use TorresDeveloper\MVC\Controller\Route;
 use TorresDeveloper\MVC\View\Loader\NativeViewLoader;
 use TorresDeveloper\MVC\View\View;
 
-use function Bloqs\Core\api;
+use function Bloqs\Config\cnf;
+use function Bloqs\Core\getProfile;
 use function TorresDeveloper\MVC\baseurl;
 
 /**
@@ -53,35 +57,158 @@ use function TorresDeveloper\MVC\baseurl;
  */
 class Bloq extends Controller
 {
+    public function before(): void
+    {
+        parent::before();
+
+        $this->needsConf();
+    }
+
     #[Route]
+    #[MethodsAllowed(HTTPVerb::GET)]
+    #[View(NativeViewLoader::class)]
+    public function index(string $id): void
+    {
+        if (!$id) {
+            $this->redirect(baseurl());
+            return;
+        }
+
+        $api = new URI(cnf("REST", "domain"));
+
+        $bloq = Product::new($api, $id);
+
+        if ($bloq === null) {
+            $this->redirect(baseurl());
+            return;
+        }
+
+        $res = $bloq->response->response();
+        switch ($res->getStatusCode()) {
+            case 404:
+                $this->redirect(baseurl());
+                return;
+            case 401:
+                $this->redirect(baseurl("credentials/log", [
+                    "redirect" => baseurl("bloq/make")
+                ]));
+                return;
+            case 403:
+                throw new NoPermissionsException($res);
+        }
+
+        $this->load("php/info", [
+            "bloq" => $bloq,
+        ]);
+    }
+
+    #[Route]
+    #[MethodsAllowed(HTTPVerb::GET, HTTPVerb::POST)]
     #[View(NativeViewLoader::class)]
     public function make(): void
     {
+        $api = new URI(cnf("REST", "domain"));
+
         if ($this->getVerb() === HTTPVerb::POST) {
-            $bloq = new Product(api());
+            $bloq = new Product($api);
             $bloq->setName($this->body("name"));
             $bloq->setDescription($this->body("description"));
-            $bloq->setPreference(Category::selectOne(api(), $this->body("preference")));
+            $separator = ";";
+            $keywords = explode($separator, $this->body("keywords"));
+            $tags = [];
+            foreach ($keywords as $i) {
+                if ($i === "") {
+                    if (count($tags) !== 0) {
+                        $tags[count($tags) - 1] .= ";";
+                    }
+                    continue;
+                }
+
+                $tags[] = $i;
+            }
+            if (count($tags) && str_ends_with($tags[count($tags) - 1], ";")) {
+                $tags[count($tags) - 1] = substr($tags[count($tags) - 1], 0, -1);
+            }
+            $bloq->setKeywords($tags);
+            $preference = Category::new($api, $this->body("preference"));
+            $res = $preference->response->response();
+            switch ($res->getStatusCode()) {
+                case 404:
+                    $profiles = [];
+                    break;
+                case 401:
+                    $this->redirect(baseurl("credentials/log", [
+                        "redirect" => baseurl("bloq/make")
+                    ]));
+                    return;
+                case 403:
+                    throw new NoPermissionsException($res);
+            }
+            $bloq->setPreference($preference);
+            $creator = Person::new($api, $this->body("creator"));
+            $res = $creator->response->response();
+            switch ($res->getStatusCode()) {
+                case 404:
+                    $profiles = [];
+                    break;
+                case 401:
+                    $this->redirect(baseurl("credentials/log", [
+                        "redirect" => baseurl("bloq/make")
+                    ]));
+                    return;
+                case 403:
+                    throw new NoPermissionsException($res);
+            }
+            $bloq->setCreator($creator);
             $image = $this->req->getUploadedFiles()["image"];
             if ($image) {
                 $bloq->setImage($this->req->getUploadedFiles()["image"]);
             }
             $bloq->setHasAdultConsideration($this->body("adult") === "on");
             $bloq->insert();
+            $res = $bloq->actionRes();
+            switch ($res->getStatusCode()) {
+                case 404:
+                    $profiles = [];
+                    break;
+                case 401:
+                    $this->redirect(baseurl("credentials/log", [
+                        "redirect" => baseurl("bloq/make")
+                    ]));
+                    return;
+                case 403:
+                    throw new NoPermissionsException($res);
+            }
 
-            $this->res = $this->res
-                ->withHeader("Location", baseurl())
-                ->withStatus(201);
+            $this->redirect(baseurl());
 
             return;
         }
 
-        $preferences = Category::getFinder(api())->run();
+        $preferences = Category::getFinder($api)->run();
+        $find = Person::getFinder($api)
+            ->withID(cnf("REST", "myself") ?? "@")
+            ->run();
+        $profiles = [...$find];
+        /** @var \TorresDeveloper\Pull\Pull $res */
+        $res = $find->getReturn();
+        switch ($res->response()->getStatusCode()) {
+            case 404:
+                $profiles = [];
+                break;
+            case 401:
+                $this->redirect(baseurl("credentials/log", [
+                    "redirect" => baseurl("bloq/make")
+                ]));
+                return;
+            case 403:
+                throw new NoPermissionsException($res->response());
+        }
 
         $this->load("php/bloq", [
             "preferences" => $preferences,
-            "adultAllowed" => BloqsCfg::getCfg()
-                ->tryGet("allow_adult_consideration"),
+            "profiles" => $profiles,
+            "cur" => Person::new($api, getProfile()),
         ]);
     }
 }

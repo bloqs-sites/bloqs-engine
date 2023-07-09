@@ -14,8 +14,8 @@ export default (ctx) => ({
             stage: 1,
         },
         autoprefixer: {},
-        cssnano: {
-            preset: "advanced",
-        },
+        //cssnano: {
+        //    preset: "advanced",
+        //},
     },
 });

@@ -1,36 +1,46 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": [
-      "@tsconfig/recommended/tsconfig.json",
-      "@tsconfig/esm/tsconfig.json",
-      "@tsconfig/strictest/tsconfig.json"
-  ],
-  "compilerOptions": {
-    "target": "ESNext",
-    "lib": [ "DOM" ],
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "useDefineForClassFields": true,
-    "module": "ES2022",
-    "allowJs": true,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "removeComments": true,
-    "importHelpers": true,
-    "emitBOM": false,
-    "newLine": "lf",
-    "noEmitOnError": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "useUnknownInCatchVariables": true,
-    "alwaysStrict": true,
-    "outDir": "./public/assets/js/"
-  },
-  "include": [ "./src/scripts/**/*.ts" ],
-  "exclude": ["./node_modules", "./dist", "./.postcssrc.ts"]
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "extends": [
+        "@tsconfig/recommended/tsconfig.json",
+        "@tsconfig/esm/tsconfig.json",
+        "@tsconfig/strictest/tsconfig.json"
+    ],
+    "compilerOptions": {
+        "target": "ESNext",
+        "lib": [
+            "DOM"
+        ],
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "useDefineForClassFields": true,
+        "module": "ES2022",
+        "allowJs": true,
+        "declaration": true,
+        "declarationMap": true,
+        "removeComments": true,
+        "importHelpers": true,
+        "emitBOM": false,
+        "newLine": "lf",
+        "noEmitOnError": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "strictBindCallApply": true,
+        "strictPropertyInitialization": true,
+        "noImplicitThis": true,
+        "useUnknownInCatchVariables": true,
+        "alwaysStrict": true,
+        "outDir": "./public/assets/js/",
+        "moduleResolution": "nodenext"
+    },
+    "include": [
+        "./src/scripts/**/*.ts",
+        "./rollup.config.ts",
+        "./rollup-plugin-terser.d.ts"
+    ],
+    "exclude": [
+        "./node_modules",
+        "./dist",
+        "./.postcssrc.ts"
+    ]
 }

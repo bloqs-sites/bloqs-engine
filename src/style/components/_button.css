@@ -1,9 +1,9 @@
 .button {
     cursor: pointer;
-    border-radius: 1rem;
+    border-radius: .333rem;
     text-decoration: none;
     display: inline-flex;
-    padding: .333rem;
+    padding: .333rem .75rem;
     margin: .333rem;
 }
 
@@ -20,6 +20,7 @@
 .button:hover,
 .button:focus-visible { opacity: 50%; }
 
-.button[data-type="inverted"] {
-
+.button.inverted {
+    box-shadow: 0 0 .5rem var(--clr-30);
+    border-width: 0;
 }

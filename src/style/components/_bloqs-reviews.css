@@ -1,0 +1,43 @@
+#product > #reviews {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+}
+
+#product > #reviews > [itemprop="aggregateRating"] {
+    margin-right: auto;
+}
+
+#product > #reviews [itemprop="reviews"] > [itemprop="reviewRating"] > div:has([itemprop="author"]) {
+    display: flex;
+    gap: 1rem;
+}
+
+#product > #reviews [itemprop="reviews"] > [itemprop="reviewRating"] > div:has([itemprop="author"]) > [itemprop="author"] {
+    display: contents;
+}
+
+#product > #reviews [itemprop="reviews"] > [itemprop="reviewRating"] > div:has([itemprop="author"]) > [itemprop="author"] > [itemprop="name"] {
+    font-weight: 700;
+}
+
+#product > #reviews [itemprop="reviews"] > [itemprop="reviewRating"] > div:has([itemprop="author"]) > [itemprop="author"] > [itemprop="image"] {
+    max-width: 32px;
+    max-height: 32px;
+    overflow: hidden;
+    border-radius: 100vmax;
+}
+
+#product > #reviews [itemprop="reviews"] > [itemprop="reviewRating"] > div:has([itemprop="author"]) > [itemprop="ratingValue"] {
+    font-weight: 700;
+}
+
+#product > #reviews [itemprop="reviews"] > [itemprop="reviewRating"] > div:has([itemprop="ratingExplanation"]) {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    margin-right: auto;
+    border-left: .333rem var(--clr-60) solid;
+    padding-left: 1rem;
+}

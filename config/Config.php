@@ -31,6 +31,8 @@ declare(strict_types=1);
 
 namespace Bloqs\Config;
 
+use Bloqs\Errors\ThrowableHandler;
+use TorresDeveloper\HTTPMessage\URI;
 use TorresDeveloper\MVC\Config\Config as AbstractConfig;
 
 /**
@@ -59,6 +61,8 @@ class Config extends AbstractConfig
         $entries["default_controller"] = "Market";
         $entries["templates"] = $entries["root"] . "/src/templates/";
         $entries["path_search_param"] = "path";
+        $entries["th_hdlr"] = ThrowableHandler::class;
+        $entries["agros_api"] = new URI("http://localhost:5000/");
 
         return $entries;
     }

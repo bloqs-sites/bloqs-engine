@@ -1,4 +1,71 @@
 #instance-asker {
     margin: auto;
     padding: 1rem;
+    box-shadow: 0 0 1rem var(--clr-30);
+    border-radius: .333rem;
+    border-width: 0;
+    max-width: 35ch;
+    z-index: 6;
+    scroll-snap-align: center;
+}
+
+#instance-asker::backdrop {
+    backdrop-filter: blur(.333rem);
+}
+
+@media (min-width: 40em) {
+    #instance-asker {
+        width: max-content;
+        max-width: unset;
+    }
+}
+
+@media (min-width: 48em) {
+    #instance-asker {
+        width: 80ch;
+    }
+}
+
+#instance-asker > h1 {
+    margin: .75rem;
+    font-weight: 700;
+    width: min-content;
+}
+
+@media (min-width: 40em) {
+    #instance-asker > h1 {
+        float: left;
+    }
+}
+
+#instance-asker > p {
+    margin: .333rem 0;
+}
+
+#instance-asker > form {
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    clear: left;
+}
+
+#instance-asker > form > p > label {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (min-width: 40em) {
+    #instance-asker > form > p > label {
+        flex-direction: row;
+    }
+}
+
+#instance-asker > form > p > label > input {
+    width: 100%;
+    margin: .333rem;
+    border-style: none;
+    border-bottom-style: solid;
 }

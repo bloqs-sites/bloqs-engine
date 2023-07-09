@@ -31,17 +31,19 @@ declare(strict_types=1);
 
 namespace Bloqs\Controllers;
 
-use Bloqs\Core\ClientData;
+use Bloqs\Core\Controller;
 use TorresDeveloper\HTTPMessage\HTTPVerb;
-use TorresDeveloper\MVC\Controller\Controller;
 use TorresDeveloper\MVC\Controller\MethodsAllowed;
 use TorresDeveloper\MVC\Controller\Route;
 use TorresDeveloper\MVC\View\Loader\NativeViewLoader;
 use TorresDeveloper\MVC\View\View;
 
 use function Bloqs\Config\cnf;
+use function Bloqs\Core\getClient;
+use function Bloqs\Core\issetToken;
+use function Bloqs\Core\setToken;
+use function Bloqs\Core\unsetToken;
 use function TorresDeveloper\MVC\baseurl;
-use function TorresDeveloper\MVC\debug;
 use function TorresDeveloper\Pull\pull;
 
 /**
@@ -54,6 +56,13 @@ use function TorresDeveloper\Pull\pull;
  */
 final class Credentials extends Controller
 {
+    public function before(): void
+    {
+        $this->needsConf();
+
+        parent::before();
+    }
+
     #[Route]
     #[MethodsAllowed(HTTPVerb::GET)]
     #[View(NativeViewLoader::class)]
@@ -72,28 +81,19 @@ final class Credentials extends Controller
 
     private function form(string $title): void
     {
-        if (cnf() === null) {
-            $this->res = $this->res
-                ->withStatus(308)
-                ->withHeader("Location", baseurl());
-
-            return;
-        }
-
-        $type = $this->req->getQueryParams()[cnf("auth", "authTypeQueryParam")
+        $type = $this->req->getQueryParams()[cnf("auth", "queryParams", "type")
             ?? "type"] ?? null;
 
-        $methods_raw = cnf("auth", "supported") ?? [];
-        $methods = [];
-        foreach ($methods_raw as $i) {
-            $methods[$i] = true;
-        }
+        $methods = cnf("auth", "supported") ?? [];
 
         if ($type === null) {
             $this->load("php/credentials/index", [
                 "title" => $title,
                 "action" => baseurl("credentials"),
+                "redirect" => $this->req->getQueryParams()["redirect"] ?? null,
                 "methods" => $methods,
+                "client" => getClient()["client"] ?? null,
+                "type" => getClient()["type"] ?? null,
             ]);
         }
     }
@@ -102,17 +102,9 @@ final class Credentials extends Controller
     #[MethodsAllowed(HTTPVerb::POST)]
     public function basic(): void
     {
-        if (cnf() === null) {
-            $this->res = $this->res
-                ->withStatus(308)
-                ->withHeader("Location", baseurl());
-
-            return;
-        }
-
-        $type = cnf("auth", "authTypeQueryParam") ?? "type";
+        $type = cnf("auth", "queryParams", "type") ?? "type";
         $resource = cnf("auth", "domain")
-            . cnf("auth", "logPath")
+            . cnf("auth", "paths", "log")
             . "?$type=basic";
 
         try {
@@ -123,9 +115,9 @@ final class Credentials extends Controller
                 [
                     "Origin" => $this->req->getHeader("Origin")[0],
                 ]
-            );
+            )->response();
         } catch (\Throwable $th) {
-            $th->getMessage();
+            echo $th->__toString();
             $this->back();
             return;
         }
@@ -133,19 +125,107 @@ final class Credentials extends Controller
         $body = $res->json();
 
         if (!($body["validation"]["valid"] ?? false)) {
-            echo $body["validation"]["message"] ?? "";
             $this->back();
             return;
         } else {
             $tk = $body["token"]["jwt"] ?? null;
 
             if ($tk) {
-                ClientData::setToken($body["token"]["jwt"]);
+                setToken($body["token"]["jwt"]);
             }
         }
 
-        $this->res = $this->res
-            ->withStatus(308)
-            ->withHeader("Location", baseurl());
+        $this->redirect($this->req->getQueryParams()["redirect"] ?: baseurl());
+    }
+
+    #[Route]
+    #[MethodsAllowed(HTTPVerb::GET, HTTPVerb::POST)]
+    #[View(NativeViewLoader::class)]
+    public function grant(): void
+    {
+        if (!issetToken()) {
+            $this->back();
+            return;
+        }
+
+        $type = cnf("auth", "queryParams", "type") ?? "type";
+
+        switch ($this->req->getMethod()) {
+            case HTTPVerb::GET->value:
+                $type = $this->req->getQueryParams()[$type] ?? null;
+
+                $methods = cnf("auth", "supported") ?? [];
+
+                if ($type === null) {
+                    $this->load("php/credentials/grant", [
+                        "type" => getClient()["type"],
+                        "permissions" => $this->req->getQueryParams()["permission"],
+                        "query" => "?permissions="
+                            . implode(
+                                "&permissions=",
+                                $this->req->getQueryParams()["permission"]
+                            )
+                            . "&redirect="
+                            . ($this->req->getHeader("Referer")[0] ?? ""),
+                        "action" => baseurl("credentials"),
+                        "methods" => $methods,
+                    ]);
+                } else {
+                    $this->back();
+                }
+
+                return;
+            case HTTPVerb::POST->value:
+                $resource = cnf("auth", "domain")
+                    . cnf("auth", "paths", "log")
+                    . "?$type=basic&permissions=default&permissions="
+                    . $this->req->getQueryParams()["permissions"];
+
+                try {
+                    $res = pull(
+                        $resource,
+                        HTTPVerb::POST,
+                        [
+                            "email" => getClient()["client"],
+                            "pass" => $this->body("pass"),
+                        ],
+                        [
+                            "Origin" => $this->req->getHeader("Origin")[0],
+                        ]
+                    )->response();
+                } catch (\Throwable) {
+                    $this->back();
+                    return;
+                }
+
+                $body = $res->json();
+
+                if (!($body["validation"]["valid"] ?? false)) {
+                    echo $body["validation"]["message"] ?? "";
+                    $this->back();
+                    return;
+                } else {
+                    $tk = $body["token"]["jwt"] ?? null;
+
+                    if ($tk) {
+                        setToken($body["token"]["jwt"]);
+                    }
+                }
+
+                $location = $this->req->getQueryParams()["redirect"] ?? null;
+                $this->redirect($location ?? baseurl(), 301);
+                return;
+        }
+
+        $this->res = $this->res->withStatus(405);
+    }
+
+
+    #[Route]
+    public function revoke(): void
+    {
+        unsetToken();
+
+        $this->redirect(baseurl(), 301);
     }
 }

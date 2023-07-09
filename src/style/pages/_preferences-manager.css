@@ -1,0 +1,44 @@
+#preferences-manager > table.list {
+    width: 100%;
+}
+
+#preferences-manager > table.list > thead > tr > th {
+    font-weight: bold;
+}
+
+#preferences-manager > table.list > tbody > tr > td {
+    text-align: center;
+}
+
+#preferences-manager > table.list > tbody > tr > td.no-desc {
+    opacity: 0.5;
+}
+
+#preferences-manager > table.list > tbody > tr > td.clr > div {
+    width: 1rem;
+    aspect-ratio: 1/1;
+    border-radius: 100vmax;
+    margin: auto;
+}
+
+#preferences-manager > .create > form p > label {
+    display: flex;
+    flex-direction: column;
+}
+
+#preferences-manager > .create > form p > label > input[type="color"] {
+    width: 100%;
+    height: 100%;
+}
+
+#preferences-manager > .create > form p:has(label > input[type="color"]) {
+    width: 100%;
+}
+
+#preferences-manager > .create > form p > label:has(input[type="color"]) {
+    height: 100%;
+}
+
+#preferences-manager > .create > form > div.flex > p:has(button.button.wide) {
+    width: 100%;
+}

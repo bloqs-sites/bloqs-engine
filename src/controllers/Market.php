@@ -31,9 +31,10 @@ declare(strict_types=1);
 
 namespace Bloqs\Controllers;
 
-use Bloqs\Core\ClientData;
+use Bloqs\Core\Controller;
+use Bloqs\Models\Product;
 use TorresDeveloper\HTTPMessage\HTTPVerb;
-use TorresDeveloper\MVC\Controller\Controller;
+use TorresDeveloper\HTTPMessage\URI;
 use TorresDeveloper\MVC\Controller\MethodsAllowed;
 use TorresDeveloper\MVC\Controller\Route;
 use TorresDeveloper\MVC\View\Loader\NativeViewLoader;
@@ -43,6 +44,10 @@ use function Bloqs\Config\cnf;
 use function Bloqs\Config\hist;
 use function Bloqs\Config\provide;
 use function Bloqs\Config\provider;
+use function Bloqs\Core\getClient;
+use function Bloqs\Core\issetToken;
+use function Bloqs\Core\unsetProfile;
+use function Bloqs\Core\unsetToken;
 use function TorresDeveloper\MVC\baseurl;
 use function TorresDeveloper\MVC\debug;
 
@@ -57,32 +62,56 @@ use function TorresDeveloper\MVC\debug;
 class Market extends Controller
 {
     #[Route]
+    #[MethodsAllowed(HTTPVerb::GET)]
     #[View(NativeViewLoader::class)]
     public function index(): void
     {
-        //debug($this->req->getCookieParams());
+        $this->needsAccountIfCredentials();
+        if ($this->toRespondEarly()) {
+            return;
+        }
 
-        $this->load("php/market", [
-            "logged" => ClientData::getClient($this->req),
-            "provider" => provider(),
+        $api = null;
+        try {
+            $uri = new URI(provider());
+            $api = new URI(cnf("REST", "domain"));
+
+            $provider = $uri->__toString();
+        } catch (\Throwable) {
+            if (!isset($uri)) {
+                $provider = null;
+            }
+        }
+        $data = [
+            "logged" => issetToken(),
+            "admin" => getClient()["is_super"] ?? false,
+            "id" => $this->profile?->getName() ?? "",
+            "provider" => $provider,
             "name" => cnf("name") ?? "",
             "fav_instances" => null,
             "instances_hist" => hist(),
-        ]);
+        ];
+
+        if (!$this->js) {
+            $data["products"] = $api === null ? [] : Product::getFinder($api)->run();
+        }
+
+        $this->load("php/market", $data);
     }
 
     #[Route]
     #[MethodsAllowed(HTTPVerb::POST)]
     public function provide(): void
     {
-        $provider = $this->body("instance");
+        $provider = $this->body("bloq-instance");
 
         if ($provider !== null) {
             provide($provider);
         }
 
-        $this->res = $this->res
-            ->withStatus(308)
-            ->withHeader("Location", baseurl("market/index"));
+        unsetToken();
+        unsetProfile();
+
+        $this->redirect(baseurl());
     }
 }

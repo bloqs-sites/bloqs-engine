@@ -1,11 +1,19 @@
 <?php
-
+use function Bloqs\Config\cnf;
 use function TorresDeveloper\MVC\baseurl;
+use function TorresDeveloper\MVC\now;
 
+$title = cnf("name") ?? "Browse a Bloq, give an instance!";
+$rest_api = cnf("REST", "domain");
+$auth_api = cnf("auth", "domain");
+$logo_href = cnf("logo", "href");
+$logo_type = cnf("logo", "type");
+$v = "" ?? strtolower(now()->format("dMY"));
 ?>
 
 <meta charset="utf-8" />
-<title>PAP</title>
+
+<title><?=$title?></title>
 
 <!-- <base href="" target="" /> -->
 
@@ -20,17 +28,23 @@ use function TorresDeveloper\MVC\baseurl;
 <link rel=alternate href="/en/pdf" hreflang=en type=application/pdf title="English PDF">
 <link rel=alternate href="/fr/pdf" hreflang=fr type=application/pdf title="French PDF">
 
-<link rel="dns-prefetch" href="//example.com">
+<?php if (isset($auth_api)): ?>
+<link rel="dns-prefetch" href="<?=$auth_api?>">
+<?php endif; ?>
+<?php if (isset($rest_api)): ?>
+<link rel="dns-prefetch" href="<?=$rest_api?>">
+<?php endif; ?>
 <link rel="preconnect" href="//example.com">
 <link rel="preconnect" href="//cdn.example.com" crossorigin>
 <link rel="prefetch" href="//example.com/next-page.html" as="document" crossorigin="use-credentials">
-<link rel="prefetch" href="/library.js" as="script">
+<link rel="modulepreload" href="<?=baseurl("assets/js/bundle.js")?>" as="script">
+<link rel="prefetch" href="<?=baseurl("assets/js/bundle.js")?>" as="script">
 <link rel="prerender" href="//example.com/next-page.html">
 
 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="mask-icon" href="favicon.svg" color="red" />
-<link rel="icon" type="image/vnd.microsoft.icon" href="https://example.com/image.ico" />
+<link rel="mask-icon" href="favicon.svg" color="black" />
+<link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico" />
 <link rel="shortcut icon" href="https://example.com/myicon.ico" />
 <link rel=icon href=favicon.png sizes="16x16" type="image/png">
 <link rel=icon href=windows.ico sizes="32x32 48x48" type="image/vnd.microsoft.icon">
@@ -58,10 +72,10 @@ the same ones but without -precomposed
 <link rel="license" href="/about">
 -->
 
-<!--[if gt IE 8]><!--><link href="<?=baseurl("assets/css/style.css?v=13aug2022")?>" rel="stylesheet" title="Default Style" /><!--<![endif]-->
-<!--[if lte IE 8]><link href="<?=baseurl("assets/css/legacy.css?v=13aug2022")?>" rel="stylesheet" title="Default Style Legacy" /><![endif]-->
+<!--[if gt IE 8]><!--><link href="<?=baseurl("assets/css/style.css")?>" rel="stylesheet" title="Default Style" /><!--<![endif]-->
+<!--[if lte IE 8]><link href="<?=baseurl("assets/css/legacy.css")?>" rel="stylesheet" title="Default Style Legacy" /><![endif]-->
 
-<link href="<?=baseurl("assets/css/legacy.css?v=13aug2022")?>" rel="alternate stylesheet" title="Default Style Legacy" />
+<link href="<?=baseurl("assets/css/legacy.css")?>" rel="alternate stylesheet" title="Default Style Legacy" />
 <!-- <link href="fancy.css" rel="stylesheet" title="Fancy" /> -->
 <!-- <link href="basic.css" rel="alternate stylesheet" title="Basic" /> -->
 
@@ -104,7 +118,7 @@ X-UA-Compatible x-ua-compatible
 Content security policy content-security-policy
 -->
 
-<meta name="date" content="2022-12-20" />
+<meta name="date" content="<?=now()->format("Y-m-d")?>" />
 
 <meta name="robots" content="all" />
 
@@ -112,6 +126,11 @@ Content security policy content-security-policy
 <script src="script/html5shiv.js"></script>
 <![endif]-->
 
-<!--<link rel="preload" as="image" type="image/webp" href="/logo.webp">-->
+<?php if (isset($logo_href, $logo_type)): ?>
+<link rel="preload" as="image" type="image/<?=$logo_type?>" href="<?=$logo_href?>">
+<?php endif; ?>
+
 <script type="module" src="/assets/js/webp-in-css/polyfill.js"></script>
 <script type="module" src="https://unpkg.com/avif-in-css/polyfill.js"></script>
+
+<script type="module" async src="<?=baseurl("assets/js/bundle.js")?>"></script>

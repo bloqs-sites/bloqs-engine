@@ -28,11 +28,13 @@
             "Bloqs\\Config\\": "config/",
             "Bloqs\\Controllers\\": "src/controllers",
             "Bloqs\\Models\\": "src/models",
-            "Bloqs\\Core\\": "src/core"
+            "Bloqs\\Core\\": "src/core",
+            "Bloqs\\Errors\\": "src/err"
         },
         "files": [
             "src/core/helpers.php",
-            "src/core/config.php"
+            "src/core/config.php",
+            "src/core/client_data.php"
         ]
     },
     "minimum-stability": "dev",

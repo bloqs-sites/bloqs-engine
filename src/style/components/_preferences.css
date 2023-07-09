@@ -12,9 +12,9 @@
     cursor: pointer;
     padding: .333em 1em;
 
-    background-color: var(--clr-light-30);
-    color: var(--clr-light-60);
-    font-size: var(--fs-6);
+    background-color: var(--clr-30);
+    color: var(--clr-60);
+    font-size: var(--fs-3);
     font-weight: 500;
 
     border-radius: 100vmax;
@@ -23,6 +23,6 @@
 }
 
 #preferences-list label:has(input[type="checkbox"]:checked) {
-    background-color: var(--clr-light-10);
+    background-color: var(--clr-10);
     color: white;
 }
